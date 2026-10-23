@@ -6,7 +6,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.wear.compose.material3.ColorScheme
 import androidx.wear.compose.material3.MaterialTheme
 
-val BitchatWearColorScheme = ColorScheme(
+val YarikWearColorScheme = ColorScheme(
     primary = Color(0xFF32D74B),
     onPrimary = Color.Black,
     primaryContainer = Color(0xFF163D1D),
@@ -31,11 +31,11 @@ val BitchatWearColorScheme = ColorScheme(
 )
 
 @Composable
-fun BitchatWearTheme(content: @Composable () -> Unit) {
-    CompositionLocalProvider(LocalBitchatPalette provides DarkBitchatPalette) {
+fun YarikWearTheme(content: @Composable () -> Unit) {
+    CompositionLocalProvider(LocalYarikPalette provides DarkYarikPalette) {
         MaterialTheme(
-            colorScheme = BitchatWearColorScheme,
-            typography = BitchatWearTypography,
+            colorScheme = YarikWearColorScheme,
+            typography = YarikWearTypography,
             content = content
         )
     }

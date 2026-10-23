@@ -17,13 +17,13 @@ import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.res.stringResource
-import com.bitchat.android.ui.theme.BitchatFontFamily
+import com.bitchat.android.ui.theme.YarikFontFamily
 import com.bitchat.android.R
 import com.bitchat.android.core.ui.component.text.AnnotatedClickableText
 import com.bitchat.android.mesh.MeshService
 import com.bitchat.android.model.BitchatMessage
 import androidx.compose.material3.ColorScheme
-import com.bitchat.android.ui.theme.LocalBitchatPalette
+import com.bitchat.android.ui.theme.LocalYarikPalette
 import java.text.SimpleDateFormat
 import androidx.compose.ui.platform.LocalContext
 
@@ -41,7 +41,7 @@ fun AudioMessageItem(
     showSender: Boolean = true,
     bubbles: Boolean = false
 ) {
-    val palette = LocalBitchatPalette.current
+    val palette = LocalYarikPalette.current
     val context = LocalContext.current
     val liveMessageIDs by com.bitchat.android.features.voice.LiveVoiceManager
         .getInstance(context).liveMessageIDs.collectAsState()
@@ -130,7 +130,7 @@ fun AudioMessageItem(
                 }
             },
             onLongPress = { onMessageLongPress?.invoke(message) },
-            fontFamily = BitchatFontFamily,
+            fontFamily = YarikFontFamily,
             color = colorScheme.onSurface,
         )
 

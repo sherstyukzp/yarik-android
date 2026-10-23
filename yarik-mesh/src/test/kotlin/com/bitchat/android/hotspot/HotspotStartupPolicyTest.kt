@@ -133,7 +133,7 @@ class HotspotStartupPolicyTest {
     }
 
     @Test
-    fun `another phone's bitchat group is not treated as ours by its prefix`() {
+    fun `another phone's Yarik group is not treated as ours by its prefix`() {
         val action = HotspotStartupPolicy.startAction(
             p2pState = WifiP2pManager.WIFI_P2P_STATE_ENABLED,
             existingGroupName = "DIRECT-BC-THEIRS99",

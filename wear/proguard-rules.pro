@@ -1,4 +1,4 @@
-# Gson reflection targets in the shared bitchat sources (persisted state payloads).
+# Gson reflection targets in the shared Yarik sources (persisted state payloads).
 -keep class com.bitchat.android.favorites.** { *; }
 -keep class com.bitchat.android.services.SeenMessageStore$* { *; }
 -keepclassmembers class * {

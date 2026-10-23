@@ -5,7 +5,7 @@ import com.bitchat.android.mesh.PowerManager
 import com.bitchat.watch.notification.WearNotificationCoordinator
 import com.bitchat.watch.ui.WearPeerIdentityState
 
-class BitchatWatchApplication : Application() {
+class YarikWatchApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         PowerManager.getInstance(applicationContext)

@@ -80,7 +80,7 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.bitchat.android.ui.theme.BitchatFontFamily
+import com.bitchat.android.ui.theme.YarikFontFamily
 import com.bitchat.android.R
 import com.bitchat.android.core.ui.component.text.AnnotatedClickableText
 import com.bitchat.android.mesh.MeshService
@@ -89,10 +89,10 @@ import com.bitchat.android.model.BitchatMessageType
 import com.bitchat.android.model.DeliveryStatus
 import com.bitchat.android.ui.media.FileMessageItem
 import com.bitchat.android.ui.theme.BASE_FONT_SIZE
-import com.bitchat.android.ui.theme.BitchatMotion
+import com.bitchat.android.ui.theme.YarikMotion
 import com.bitchat.android.ui.theme.ChatUiModeManager
 import com.bitchat.android.ui.theme.ChatVisualTokens
-import com.bitchat.android.ui.theme.LocalBitchatPalette
+import com.bitchat.android.ui.theme.LocalYarikPalette
 import com.bitchat.android.ui.theme.MessageBodyTextStyle
 import com.bitchat.android.ui.theme.MessageSenderTextStyle
 import com.bitchat.android.ui.theme.colorForPeer
@@ -129,7 +129,7 @@ private val MessagePlacementSpec: FiniteAnimationSpec<IntOffset> = spring(
 )
 
 /** Removals are not worth dwelling on. */
-private val MessageFadeOutSpec: FiniteAnimationSpec<Float> = tween(BitchatMotion.QUICK_MS)
+private val MessageFadeOutSpec: FiniteAnimationSpec<Float> = tween(YarikMotion.QUICK_MS)
 
 /**
  * How long placement animation stays armed after the list gains or loses a message.
@@ -518,7 +518,7 @@ fun MessageItem(
         onImageClick: ((String, List<String>, Int) -> Unit)?,
         modifier: Modifier = Modifier
     ) {
-    val palette = LocalBitchatPalette.current
+    val palette = LocalYarikPalette.current
 
     // Image special rendering
     if (message.type == BitchatMessageType.Image) {
@@ -603,7 +603,7 @@ fun MessageItem(
                     }
                 },
                 onLongPress = { onMessageLongPress?.invoke(message) },
-                fontFamily = BitchatFontFamily,
+                fontFamily = YarikFontFamily,
                 color = colorScheme.onSurface,
             )
 
@@ -674,7 +674,7 @@ fun MessageItem(
                     } else {
                         Text(
                             text = stringResource(R.string.file_unavailable),
-                            fontFamily = BitchatFontFamily,
+                            fontFamily = YarikFontFamily,
                             color = palette.textTertiary
                         )
                     }
@@ -724,7 +724,7 @@ fun MessageItem(
                     }
                 )
             },
-            fontFamily = BitchatFontFamily,
+            fontFamily = YarikFontFamily,
             softWrap = true,
             overflow = TextOverflow.Visible,
             style = ChatVisualTokens.SystemActionStyle.copy(
@@ -763,7 +763,7 @@ internal fun TextMessageLayout(
     bubbles: Boolean = false,
     bodyContent: String = message.content,
 ) {
-    val palette = LocalBitchatPalette.current
+    val palette = LocalYarikPalette.current
     val myPeerId = meshService.myPeerID
     val displayMessage = remember(message, bodyContent) {
         if (bodyContent == message.content) message else message.copy(content = bodyContent)
@@ -846,7 +846,7 @@ internal fun TextMessageLayout(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = MessageGrouping.SENDER_TOP_PADDING),
-                fontFamily = BitchatFontFamily,
+                fontFamily = YarikFontFamily,
                 softWrap = false,
                 overflow = TextOverflow.Ellipsis,
                 style = MessageSenderTextStyle,
@@ -874,7 +874,7 @@ internal fun TextMessageLayout(
                 }
             },
             onLongPress = handleLongPress,
-            fontFamily = BitchatFontFamily,
+            fontFamily = YarikFontFamily,
             softWrap = true,
             overflow = TextOverflow.Visible,
             style = MessageBodyTextStyle.copy(color = colorScheme.onSurface),
@@ -904,7 +904,7 @@ private fun BubbleTextMessageLayout(
     onLongPress: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val palette = LocalBitchatPalette.current
+    val palette = LocalYarikPalette.current
     val colorScheme = MaterialTheme.colorScheme
     val haptic = LocalHapticFeedback.current
     val context = LocalContext.current
@@ -992,7 +992,7 @@ private fun BubbleTextMessageLayout(
                                 }
                             },
                             onLongPress = onLongPress,
-                            fontFamily = BitchatFontFamily,
+                            fontFamily = YarikFontFamily,
                             softWrap = false,
                             overflow = TextOverflow.Ellipsis,
                             style = MessageSenderTextStyle,
@@ -1034,7 +1034,7 @@ private fun BubbleTextMessageLayout(
                                     0.dp
                                 }
                             ),
-                            fontFamily = BitchatFontFamily,
+                            fontFamily = YarikFontFamily,
                             softWrap = true,
                             overflow = TextOverflow.Visible,
                             style = MessageBodyTextStyle.copy(color = MaterialTheme.colorScheme.onSurface),
@@ -1051,7 +1051,7 @@ private fun BubbleTextMessageLayout(
                             ) {
                                 Text(
                                     text = formatTextMessageMetadata(message, timeFormatter),
-                                    fontFamily = BitchatFontFamily,
+                                    fontFamily = YarikFontFamily,
                                 )
                                 if (message.isPrivate) {
                                     message.deliveryStatus?.let { status ->
@@ -1253,12 +1253,12 @@ fun DeliveryStatusIcon(status: DeliveryStatus) {
     val (firstTarget, secondTarget) = deliveryCheckColors(status, colorScheme)
     val first by animateColorAsState(
         targetValue = firstTarget,
-        animationSpec = tween(BitchatMotion.QUICK_MS),
+        animationSpec = tween(YarikMotion.QUICK_MS),
         label = "firstCheckColor",
     )
     val second by animateColorAsState(
         targetValue = secondTarget,
-        animationSpec = tween(BitchatMotion.QUICK_MS),
+        animationSpec = tween(YarikMotion.QUICK_MS),
         label = "secondCheckColor",
     )
 

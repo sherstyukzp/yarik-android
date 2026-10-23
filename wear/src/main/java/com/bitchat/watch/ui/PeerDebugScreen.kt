@@ -29,7 +29,7 @@ import androidx.wear.compose.material3.Text
 import com.bitchat.android.services.AppStateStore
 import com.bitchat.watch.R
 import com.bitchat.watch.mesh.WearMeshService
-import com.bitchat.watch.ui.theme.LocalBitchatPalette
+import com.bitchat.watch.ui.theme.LocalYarikPalette
 import com.bitchat.watch.ui.theme.colorForPeer
 
 /**
@@ -41,7 +41,7 @@ fun PeerDebugScreen() {
     val peers by AppStateStore.peers.collectAsState()
     val mesh = WearMeshService.peek()
     val listState = rememberScalingLazyListState()
-    val palette = LocalBitchatPalette.current
+    val palette = LocalYarikPalette.current
     val nicknames = mesh?.getPeerNicknames() ?: emptyMap()
     val rssi = mesh?.getPeerRSSI() ?: emptyMap()
     val identityRevision by WearPeerIdentityState.revision.collectAsState()
@@ -63,7 +63,7 @@ fun PeerDebugScreen() {
             if (peers.isEmpty()) {
                 item {
                     Text(
-                        text = "Scanning for bitchat devices…",
+                        text = "Scanning for Yarik devices…",
                         style = MaterialTheme.typography.bodySmall,
                         color = palette.textTertiary,
                         textAlign = TextAlign.Center,

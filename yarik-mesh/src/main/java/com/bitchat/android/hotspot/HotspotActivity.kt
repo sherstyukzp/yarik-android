@@ -36,8 +36,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.bitchat.android.R
-import com.bitchat.android.ui.theme.BitchatFontFamily
-import com.bitchat.android.ui.theme.BitchatTheme
+import com.bitchat.android.ui.theme.YarikFontFamily
+import com.bitchat.android.ui.theme.YarikTheme
 import com.bitchat.android.util.UniversalApkManager
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
@@ -75,7 +75,7 @@ class HotspotActivity : ComponentActivity() {
         }
 
         setContent {
-            BitchatTheme {
+            YarikTheme {
                 HotspotScreen(
                     viewModel = viewModel,
                     apkFile = apkFile,
@@ -111,7 +111,7 @@ fun HotspotScreen(
                 title = {
                     Text(
                         text = stringResource(R.string.share_apk_title),
-                        fontFamily = BitchatFontFamily
+                        fontFamily = YarikFontFamily
                     )
                 },
                 navigationIcon = {
@@ -233,7 +233,7 @@ fun IntroScreen(onStartHotspot: () -> Unit) {
                 InfoItem("1. Your device creates a Wi-Fi hotspot")
                 InfoItem("2. Others connect to your hotspot")
                 InfoItem("3. They scan a QR code or enter a URL")
-                InfoItem("4. BitChat downloads directly to their device")
+                InfoItem("4. Yarik downloads directly to their device")
             }
         }
 
@@ -258,11 +258,11 @@ fun IntroScreen(onStartHotspot: () -> Unit) {
                     Text(
                         text = when {
                             Build.VERSION.SDK_INT >= HotspotPermissions.ANDROID_17_API_LEVEL ->
-                                "BitChat needs nearby devices and local network access to create a Wi-Fi hotspot and serve the app to connected devices."
+                                "Yarik needs nearby devices and local network access to create a Wi-Fi hotspot and serve the app to connected devices."
                             Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU ->
-                                "BitChat needs nearby devices permission to create a Wi-Fi hotspot for sharing the app offline."
+                                "Yarik needs nearby devices permission to create a Wi-Fi hotspot for sharing the app offline."
                             else ->
-                                "BitChat needs location permission to create a Wi-Fi hotspot. This is required by Android for Wi-Fi scanning, but no location data is collected."
+                                "Yarik needs location permission to create a Wi-Fi hotspot. This is required by Android for Wi-Fi scanning, but no location data is collected."
                         },
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.8f)
@@ -420,7 +420,7 @@ fun ActiveHotspotScreen(state: HotspotViewModel.HotspotState.Active) {
                     text = {
                         Text(
                             text = title,
-                            fontFamily = BitchatFontFamily,
+                            fontFamily = YarikFontFamily,
                             fontWeight = if (selectedTab == index) FontWeight.Bold else FontWeight.Normal
                         )
                     }
@@ -530,7 +530,7 @@ fun WebsiteTabContent(ipAddress: String, port: Int) {
         verticalArrangement = Arrangement.spacedBy(24.dp)
     ) {
         Text(
-            text = "Step 2: Download BitChat",
+            text = "Step 2: Download Yarik",
             style = MaterialTheme.typography.titleLarge,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center
@@ -598,7 +598,7 @@ fun WebsiteTabContent(ipAddress: String, port: Int) {
                     text = "1. Make sure you're connected to the Wi-Fi network above\n" +
                             "2. Open a web browser on your device\n" +
                             "3. Visit the URL above or scan the QR code\n" +
-                            "4. Tap 'Download BitChat'\n" +
+                            "4. Tap 'Download Yarik'\n" +
                             "5. Install the downloaded APK",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
@@ -637,7 +637,7 @@ fun CredentialCard(
                 Text(
                     text = value,
                     style = MaterialTheme.typography.bodyLarge,
-                    fontFamily = BitchatFontFamily,
+                    fontFamily = YarikFontFamily,
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.onSecondaryContainer
                 )

@@ -182,7 +182,7 @@ class OnboardingCoordinator(
      * Get the list of critical permissions that are absolutely required
      */
     private fun getCriticalPermissions(): List<String> {
-        // For bitchat, Bluetooth and location permissions are critical
+        // For Yarik, Bluetooth and location permissions are critical
         // Notifications are nice-to-have but not critical and are not included in getRequiredPermissions()
         return permissionManager.getRequiredPermissions()
     }

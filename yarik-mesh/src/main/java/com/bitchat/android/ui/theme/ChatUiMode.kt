@@ -29,7 +29,7 @@ enum class ChatUiMode {
  * Mirrors [ThemePreferenceManager].
  */
 object ChatUiModeManager {
-    private const val PREFS_NAME = "bitchat_settings"
+    private const val PREFS_NAME = "Yarik_settings"
     private const val KEY_CHAT_UI_MODE = "chat_ui_mode"
 
     private val _modeFlow = MutableStateFlow(ChatUiMode.Bubbles)

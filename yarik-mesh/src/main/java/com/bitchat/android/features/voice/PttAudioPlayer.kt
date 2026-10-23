@@ -27,7 +27,7 @@ internal class PttAudioPlayer {
     private val stopped = AtomicBoolean(false)
     private val finishing = AtomicBoolean(false)
     private val startedAt = System.currentTimeMillis()
-    private val worker = Thread(::playbackLoop, "bitchat-ptt-playback").also(Thread::start)
+    private val worker = Thread(::playbackLoop, "Yarik-ptt-playback").also(Thread::start)
 
     fun enqueue(accessUnits: List<ByteArray>) {
         if (stopped.get()) return

@@ -11,14 +11,14 @@ import com.bitchat.android.services.ContactIdentityResolver
 import java.util.*
 
 /**
- * BitChat-over-Nostr Adapter
+ * Yarik-over-Nostr Adapter
  */
-object NostrEmbeddedBitChat {
+object NostrEmbeddedYarik {
     
-    private const val TAG = "NostrEmbeddedBitChat"
+    private const val TAG = "NostrEmbeddedYarik"
     
     /**
-     * Build a `bitchat1:` base64url-encoded BitChat packet carrying a private message for Nostr DMs.
+     * Build a `bitchat1:` base64url-encoded Yarik packet carrying a private message for Nostr DMs.
      */
     fun encodePMForNostr(
         content: String,
@@ -59,7 +59,7 @@ object NostrEmbeddedBitChat {
     }
     
     /**
-     * Build a `bitchat1:` base64url-encoded BitChat packet carrying a delivery/read ack for Nostr DMs.
+     * Build a `bitchat1:` base64url-encoded Yarik packet carrying a delivery/read ack for Nostr DMs.
      */
     fun encodeAckForNostr(
         type: NoisePayloadType,

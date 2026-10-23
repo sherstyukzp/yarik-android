@@ -20,8 +20,8 @@ comparison SHAs.
 
 Inspect:
 
-- `app/src/debug/java/com/bitchat/android/testhook/TestHookReceiver.kt`
-- `app/src/debug/java/com/bitchat/android/testhook/TestHookDriver.kt`
+- `app/src/debug/java/com/Yarik/android/testhook/TestHookReceiver.kt`
+- `app/src/debug/java/com/Yarik/android/testhook/TestHookDriver.kt`
 - `app/src/debug/AndroidManifest.xml`
 
 The receiver accepts:
@@ -133,7 +133,7 @@ the in-memory store:
 
 ```kotlin
 private fun resetNicknameFixture(context: Context): JSONObject {
-    context.getSharedPreferences("bitchat_prefs", Context.MODE_PRIVATE)
+    context.getSharedPreferences("Yarik_prefs", Context.MODE_PRIVATE)
         .edit()
         .remove("nickname")
         .commit()

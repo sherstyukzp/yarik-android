@@ -43,7 +43,7 @@ class UniversalApkManager(
         private const val CACHE_DIR_NAME = "universal_apk"
         private const val METADATA_FILE_NAME = "universal_apk_info.json"
         private const val PROGRESS_FILE_NAME = "download_progress.json"
-        private const val APK_FILE_PREFIX = "bitchat-universal-"
+        private const val APK_FILE_PREFIX = "Yarik-universal-"
         private const val TEMP_FILE_NAME = "download_temp.apk"
         private const val ROUTE_READY_TIMEOUT_MILLIS = 60_000L
 
@@ -379,7 +379,7 @@ class UniversalApkManager(
             // Always start from the configured source endpoint. If a release changed,
             // If-Range makes the server return 200 and we overwrite the partial.
             .url(endpointUrl)
-            .addHeader("User-Agent", "BitChat-Android")
+            .addHeader("User-Agent", "Yarik-Android")
             .apply {
                 if (existingBytes > 0L) {
                     addHeader("Range", "bytes=$existingBytes-")
@@ -618,7 +618,7 @@ class UniversalApkManager(
         if (!verifyApkSignature(tempFile)) {
             clearPartialDownload()
             throw ApkDownloadException(
-                message = "APK from ${source.id} is not signed by a trusted BitChat release key.",
+                message = "APK from ${source.id} is not signed by a trusted Yarik release key.",
                 reason = ApkDownloadFailureReason.UntrustedKey,
                 messageArgs = listOf(source.displayName),
                 retryable = false,
@@ -641,7 +641,7 @@ class UniversalApkManager(
         val packageInfo = context.packageManager.getPackageArchiveInfo(apkFile.absolutePath, 0)
             ?: invalidDownloadedApk(ApkDownloadFailureReason.ApkUnreadable, "unreadable APK")
         if (packageInfo.packageName != context.packageName) {
-            invalidDownloadedApk(ApkDownloadFailureReason.NotBitchat, "wrong package")
+            invalidDownloadedApk(ApkDownloadFailureReason.NotYarikApk, "wrong package")
         }
         return packageInfo.versionName
             ?.takeIf { it.isNotBlank() }

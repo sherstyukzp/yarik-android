@@ -7,7 +7,7 @@ import java.security.SecureRandom
 
 /**
  * Individual Noise session for a specific peer - REAL IMPLEMENTATION with noise-java
- * 100% compatible with iOS bitchat Noise Protocol
+ * 100% compatible with iOS Yarik Noise Protocol
  */
 class NoiseSession(
     private val peerID: String,

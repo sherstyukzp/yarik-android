@@ -464,7 +464,7 @@ class BluetoothGattClientManager(
 
         val deviceAddress = device.address
         val linkID = UUID.randomUUID().toString()
-        Log.d(TAG, "Connecting to bitchat device: $deviceAddress (peerID: $peerID)")
+        Log.d(TAG, "Connecting to Yarik device: $deviceAddress (peerID: $peerID)")
 
         val gattCallback = object : BluetoothGattCallback() {
             override fun onConnectionStateChange(gatt: BluetoothGatt, status: Int, newState: Int) {

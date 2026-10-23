@@ -52,7 +52,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import com.bitchat.android.ui.theme.BitchatFontFamily
+import com.bitchat.android.ui.theme.YarikFontFamily
 import com.bitchat.android.nostr.LocationNotesManager
 import com.bitchat.android.nostr.NearbyNotesController
 import com.bitchat.android.nostr.geohashesForSampling
@@ -60,10 +60,10 @@ import com.bitchat.android.ui.theme.BASE_FONT_SIZE
 import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.bitchat.android.R
-import com.bitchat.android.core.ui.component.sheet.BitchatBottomSheet
-import com.bitchat.android.core.ui.component.sheet.BitchatSheetTitle
+import com.bitchat.android.core.ui.component.sheet.YarikBottomSheet
+import com.bitchat.android.core.ui.component.sheet.YarikSheetTitle
 import com.bitchat.android.core.ui.component.sheet.LocalSheetDismiss
-import com.bitchat.android.core.ui.component.sheet.BitchatSheetTopBar
+import com.bitchat.android.core.ui.component.sheet.YarikSheetTopBar
 import com.bitchat.android.geohash.ChannelID
 import com.bitchat.android.geohash.GeohashBookmarksStore
 import com.bitchat.android.geohash.GeohashChannel
@@ -72,8 +72,8 @@ import com.bitchat.android.geohash.LocationChannelManager
 import com.bitchat.android.net.ArtiTorManager
 import com.bitchat.android.net.TorMode
 import com.bitchat.android.net.TorPreferenceManager
-import com.bitchat.android.ui.theme.BitchatMotion
-import com.bitchat.android.ui.theme.LocalBitchatPalette
+import com.bitchat.android.ui.theme.YarikMotion
+import com.bitchat.android.ui.theme.LocalYarikPalette
 import com.bitchat.android.wifiaware.WifiAwareController
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
@@ -160,7 +160,7 @@ fun LocationChannelsSheet(
     }
     val topBarAlpha by animateFloatAsState(
         targetValue = if (isScrolled) 0.98f else 0f,
-        animationSpec = tween(BitchatMotion.EMPHASIZED_MS, easing = FastOutSlowInEasing),
+        animationSpec = tween(YarikMotion.EMPHASIZED_MS, easing = FastOutSlowInEasing),
         label = "topBarAlpha"
     )
 
@@ -176,7 +176,7 @@ fun LocationChannelsSheet(
     }
 
     val colorScheme = MaterialTheme.colorScheme
-    val palette = LocalBitchatPalette.current
+    val palette = LocalYarikPalette.current
     val standardGreen = colorScheme.primary
     val standardBlue = colorScheme.secondary
 
@@ -202,7 +202,7 @@ fun LocationChannelsSheet(
     }
 
     if (isPresented) {
-        BitchatBottomSheet(
+        YarikBottomSheet(
             modifier = modifier,
             onDismissRequest = onDismiss,
             sheetState = sheetState,
@@ -395,7 +395,7 @@ fun LocationChannelsSheet(
                                 Text(
                                     text = stringResource(R.string.location_permission_denied),
                                     fontSize = 12.sp,
-                                    fontFamily = BitchatFontFamily,
+                                    fontFamily = YarikFontFamily,
                                     color = colorScheme.error
                                 )
                                 TextButton(
@@ -415,7 +415,7 @@ fun LocationChannelsSheet(
                                     Text(
                                         text = stringResource(R.string.open_settings),
                                         fontSize = 12.sp,
-                                        fontFamily = BitchatFontFamily
+                                        fontFamily = YarikFontFamily
                                     )
                                 }
                             }
@@ -522,13 +522,13 @@ fun LocationChannelsSheet(
 
                             AnimatedVisibility(
                                 visible = customError != null,
-                                enter = fadeIn(tween(BitchatMotion.STANDARD_MS)) +
+                                enter = fadeIn(tween(YarikMotion.STANDARD_MS)) +
                                     expandVertically(
-                                        tween(BitchatMotion.STANDARD_MS, easing = FastOutSlowInEasing)
+                                        tween(YarikMotion.STANDARD_MS, easing = FastOutSlowInEasing)
                                     ),
-                                exit = fadeOut(tween(BitchatMotion.QUICK_MS)) +
+                                exit = fadeOut(tween(YarikMotion.QUICK_MS)) +
                                     shrinkVertically(
-                                        tween(BitchatMotion.QUICK_MS, easing = FastOutSlowInEasing)
+                                        tween(YarikMotion.QUICK_MS, easing = FastOutSlowInEasing)
                                     )
                             ) {
                                 // Held across the exit animation: by the time it plays, the error
@@ -537,7 +537,7 @@ fun LocationChannelsSheet(
                                 Text(
                                     text = shownError,
                                     fontSize = 12.sp,
-                                    fontFamily = BitchatFontFamily,
+                                    fontFamily = YarikFontFamily,
                                     color = colorScheme.error,
                                     modifier = Modifier.padding(
                                         start = AboutHorizontalPadding + ChannelRowHorizontal,
@@ -606,7 +606,7 @@ fun LocationChannelsSheet(
                                     checked = torMode == TorMode.ON,
                                     enabled = torAvailable,
                                     statusIndicator = {
-                                        BitchatBadge(text = stringResource(R.string.badge_recommended))
+                                        YarikBadge(text = stringResource(R.string.badge_recommended))
                                     },
                                     onCheckedChange = { enabled ->
                                         if (torAvailable) {
@@ -620,7 +620,7 @@ fun LocationChannelsSheet(
                                 Text(
                                     text = stringResource(R.string.tor_not_available_in_this_build),
                                     fontSize = 12.sp,
-                                    fontFamily = BitchatFontFamily,
+                                    fontFamily = YarikFontFamily,
                                     color = palette.textTertiary,
                                     modifier = Modifier.padding(
                                         start = AboutHorizontalPadding + ChannelRowHorizontal,
@@ -647,11 +647,11 @@ fun LocationChannelsSheet(
                     }
                 }
 
-                BitchatSheetTopBar(
+                YarikSheetTopBar(
                     onClose = onDismiss,
                     modifier = modifier.align(Alignment.TopCenter),
                     title = {
-                        BitchatSheetTitle(
+                        YarikSheetTitle(
                             text = stringResource(R.string.location_channels_title)
                         )
                     }
@@ -778,7 +778,7 @@ private fun ChannelOptionRow(
                 Text(
                     text = baseTitle,
                     fontSize = 14.sp,
-                    fontFamily = BitchatFontFamily,
+                    fontFamily = YarikFontFamily,
                     fontWeight = if (titleBold) FontWeight.SemiBold else FontWeight.Medium,
                     color = titleColor ?: colorScheme.onSurface
                 )
@@ -787,7 +787,7 @@ private fun ChannelOptionRow(
                         count = participantCount,
                         text = count,
                         fontSize = 11.sp,
-                        fontFamily = BitchatFontFamily,
+                        fontFamily = YarikFontFamily,
                         color = colorScheme.onSurfaceVariant
                     )
                 }
@@ -795,7 +795,7 @@ private fun ChannelOptionRow(
             Text(
                 text = subtitle,
                 fontSize = 12.sp,
-                fontFamily = BitchatFontFamily,
+                fontFamily = YarikFontFamily,
                 lineHeight = 17.sp,
                 color = colorScheme.onSurfaceVariant
             )
@@ -860,7 +860,7 @@ private fun ChannelLoadingRow() {
         Text(
             text = stringResource(R.string.finding_nearby_channels),
             fontSize = 12.sp,
-            fontFamily = BitchatFontFamily,
+            fontFamily = YarikFontFamily,
             color = colorScheme.onSurfaceVariant
         )
     }
@@ -878,7 +878,7 @@ private fun CustomGeohashRow(
     onTeleport: () -> Unit
 ) {
     val colorScheme = MaterialTheme.colorScheme
-    val palette = LocalBitchatPalette.current
+    val palette = LocalYarikPalette.current
     val density = LocalDensity.current
     val imeInsets = WindowInsets.ime
     val coroutineScope = rememberCoroutineScope()
@@ -889,7 +889,7 @@ private fun CustomGeohashRow(
     // and its container makes that the moment the row confirms the input is usable.
     val teleportColor by animateColorAsState(
         targetValue = if (isValid) colorScheme.primary else palette.textTertiary,
-        animationSpec = tween(BitchatMotion.STANDARD_MS, easing = FastOutSlowInEasing),
+        animationSpec = tween(YarikMotion.STANDARD_MS, easing = FastOutSlowInEasing),
         label = "teleportLabel"
     )
     val teleportContainer by animateColorAsState(
@@ -898,7 +898,7 @@ private fun CustomGeohashRow(
         } else {
             colorScheme.surfaceVariant
         },
-        animationSpec = tween(BitchatMotion.STANDARD_MS, easing = FastOutSlowInEasing),
+        animationSpec = tween(YarikMotion.STANDARD_MS, easing = FastOutSlowInEasing),
         label = "teleportContainer"
     )
     val teleportInteraction = remember { MutableInteractionSource() }
@@ -928,7 +928,7 @@ private fun CustomGeohashRow(
         Text(
             text = stringResource(R.string.hash_symbol),
             fontSize = 14.sp,
-            fontFamily = BitchatFontFamily,
+            fontFamily = YarikFontFamily,
             color = palette.textTertiary
         )
 
@@ -939,7 +939,7 @@ private fun CustomGeohashRow(
             onValueChange = onGeohashChange,
             textStyle = TextStyle(
                 fontSize = 14.sp,
-                fontFamily = BitchatFontFamily,
+                fontFamily = YarikFontFamily,
                 color = colorScheme.primary
             ),
             cursorBrush = SolidColor(colorScheme.primary),
@@ -958,7 +958,7 @@ private fun CustomGeohashRow(
                                 .first { it > 0 }
                         }
                         bringIntoViewRequester.bringIntoView()
-                        delay(BitchatMotion.STANDARD_MS.toLong())
+                        delay(YarikMotion.STANDARD_MS.toLong())
                         bringIntoViewRequester.bringIntoView()
                     }
                 },
@@ -967,7 +967,7 @@ private fun CustomGeohashRow(
                     Text(
                         text = stringResource(R.string.geohash_placeholder),
                         fontSize = 14.sp,
-                        fontFamily = BitchatFontFamily,
+                        fontFamily = YarikFontFamily,
                         color = palette.textTertiary
                     )
                 }
@@ -1003,7 +1003,7 @@ private fun CustomGeohashRow(
                 fontSize = 11.sp,
                 letterSpacing = 0.8.sp,
                 fontWeight = FontWeight.Medium,
-                fontFamily = BitchatFontFamily,
+                fontFamily = YarikFontFamily,
                 color = teleportColor,
                 modifier = Modifier.padding(horizontal = 10.dp, vertical = 8.dp)
             )
@@ -1023,7 +1023,7 @@ private fun ChannelSettingsToggleRow(
     statusIndicator: (@Composable () -> Unit)? = null
 ) {
     val colorScheme = MaterialTheme.colorScheme
-    val palette = LocalBitchatPalette.current
+    val palette = LocalYarikPalette.current
 
     Row(
         modifier = Modifier
@@ -1048,7 +1048,7 @@ private fun ChannelSettingsToggleRow(
             ) {
                 Text(
                     text = title,
-                    fontFamily = BitchatFontFamily,
+                    fontFamily = YarikFontFamily,
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Medium,
                     color = if (enabled) colorScheme.onSurface else palette.textTertiary
@@ -1057,7 +1057,7 @@ private fun ChannelSettingsToggleRow(
             }
             Text(
                 text = subtitle,
-                fontFamily = BitchatFontFamily,
+                fontFamily = YarikFontFamily,
                 fontSize = 12.sp,
                 lineHeight = 17.sp,
                 color = if (enabled) colorScheme.onSurfaceVariant else palette.textTertiary

@@ -82,7 +82,7 @@ class NostrTransport(
                     Log.e(TAG, "NostrTransport: no peerID stored for recipient npub; cannot embed PM")
                     return@launch
                 }
-                val embedded = NostrEmbeddedBitChat.encodePMForNostr(
+                val embedded = NostrEmbeddedYarik.encodePMForNostr(
                     content = content,
                     messageID = messageID,
                     recipientPeerID = recipientPeerIDForEmbed,
@@ -156,7 +156,7 @@ class NostrTransport(
                     return@launch
                 }
                 
-                val ack = NostrEmbeddedBitChat.encodeAckForNostr(
+                val ack = NostrEmbeddedYarik.encodeAckForNostr(
                     type = NoisePayloadType.READ_RECEIPT,
                     messageID = item.receipt.originalMessageID,
                     recipientPeerID = item.peerID,
@@ -220,7 +220,7 @@ class NostrTransport(
                     return@launch
                 }
                 
-                val embedded = NostrEmbeddedBitChat.encodePMForNostr(
+                val embedded = NostrEmbeddedYarik.encodePMForNostr(
                     content = content,
                     messageID = UUID.randomUUID().toString(),
                     recipientPeerID = to,
@@ -270,7 +270,7 @@ class NostrTransport(
                     return@launch
                 }
 
-                val ack = NostrEmbeddedBitChat.encodeAckForNostr(
+                val ack = NostrEmbeddedYarik.encodeAckForNostr(
                     type = NoisePayloadType.DELIVERED,
                     messageID = messageID,
                     recipientPeerID = to,
@@ -308,7 +308,7 @@ class NostrTransport(
     ) {
         transportScope.launch {
             try {
-                val embedded = NostrEmbeddedBitChat.encodeAckForNostrNoRecipient(
+                val embedded = NostrEmbeddedYarik.encodeAckForNostrNoRecipient(
                     type = NoisePayloadType.DELIVERED,
                     messageID = messageID,
                     senderPeerID = senderPeerID
@@ -341,7 +341,7 @@ class NostrTransport(
     ) {
         transportScope.launch {
             try {
-                val embedded = NostrEmbeddedBitChat.encodeAckForNostrNoRecipient(
+                val embedded = NostrEmbeddedYarik.encodeAckForNostrNoRecipient(
                     type = NoisePayloadType.READ_RECEIPT,
                     messageID = messageID,
                     senderPeerID = senderPeerID
@@ -398,8 +398,8 @@ class NostrTransport(
             try {
                 if (toRecipientHex.isEmpty()) return@launch
 
-                // Build embedded BitChat packet without recipient peer ID
-                val embedded = NostrEmbeddedBitChat.encodePMForNostrNoRecipient(
+                // Build embedded Yarik packet without recipient peer ID
+                val embedded = NostrEmbeddedYarik.encodePMForNostrNoRecipient(
                     content = content,
                     messageID = messageID,
                     senderPeerID = senderPeerID

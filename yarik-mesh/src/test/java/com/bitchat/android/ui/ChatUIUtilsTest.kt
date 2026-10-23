@@ -6,12 +6,12 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.bitchat.android.model.BitchatMessage
-import com.bitchat.android.ui.theme.BitchatFontFamily
+import com.bitchat.android.ui.theme.YarikFontFamily
 import com.bitchat.android.ui.theme.ChatVisualTokens
-import com.bitchat.android.ui.theme.DarkBitchatColorScheme
-import com.bitchat.android.ui.theme.DarkBitchatPalette
-import com.bitchat.android.ui.theme.LightBitchatColorScheme
-import com.bitchat.android.ui.theme.LightBitchatPalette
+import com.bitchat.android.ui.theme.DarkYarikColorScheme
+import com.bitchat.android.ui.theme.DarkYarikPalette
+import com.bitchat.android.ui.theme.LightYarikColorScheme
+import com.bitchat.android.ui.theme.LightYarikPalette
 import com.bitchat.android.ui.theme.MessageBodyTextStyle
 import com.bitchat.android.ui.theme.MessageSenderTextStyle
 import com.bitchat.android.ui.theme.PeerColorStyle
@@ -37,8 +37,8 @@ class ChatUIUtilsTest {
         timeZone = java.util.TimeZone.getTimeZone("UTC")
     }
 
-    private val palette = DarkBitchatPalette
-    private val colorScheme = DarkBitchatColorScheme
+    private val palette = DarkYarikPalette
+    private val colorScheme = DarkYarikColorScheme
 
     private fun message(
         content: String,
@@ -146,7 +146,7 @@ class ChatUIUtilsTest {
         assertEquals(14.sp, MessageBodyTextStyle.fontSize)
         assertEquals(20.sp, MessageBodyTextStyle.lineHeight)
         assertEquals(FontWeight.Normal, MessageBodyTextStyle.fontWeight)
-        assertEquals(BitchatFontFamily, MessageBodyTextStyle.fontFamily)
+        assertEquals(YarikFontFamily, MessageBodyTextStyle.fontFamily)
         assertEquals(14.sp, MessageSenderTextStyle.fontSize)
         assertEquals(16.sp, MessageSenderTextStyle.lineHeight)
         assertEquals(FontWeight.SemiBold, MessageSenderTextStyle.fontWeight)
@@ -470,8 +470,8 @@ class ChatUIUtilsTest {
         // Hue derivation must stay byte-identical to iOS; only saturation/value are tuned per
         // theme so dark mode stays muted-but-bright and light mode stays deep-but-readable.
         val identity = PeerIdentity.mesh("abc")
-        val dark = colorForPeer(identity, DarkBitchatPalette)
-        val light = colorForPeer(identity, LightBitchatPalette)
+        val dark = colorForPeer(identity, DarkYarikPalette)
+        val light = colorForPeer(identity, LightYarikPalette)
 
         val darkHsv = FloatArray(3)
         val lightHsv = FloatArray(3)
@@ -497,7 +497,7 @@ class ChatUIUtilsTest {
         repeat(500) { i ->
             val color = colorForPeer(
                 PeerIdentity.mesh("seed$i"),
-                DarkBitchatPalette
+                DarkYarikPalette
             )
             val hsv = FloatArray(3)
             rgbToHsv(color.red, color.green, color.blue, hsv)
@@ -510,11 +510,11 @@ class ChatUIUtilsTest {
     }
 
     @Test
-    fun `material owns standard text while Bitchat palette owns peer chroma`() {
-        assertEquals(Color(0xFFF5F5F5), DarkBitchatColorScheme.onSurface)
-        assertTrue(LightBitchatColorScheme.onSurface != DarkBitchatColorScheme.onSurface)
+    fun `material owns standard text while Yarik palette owns peer chroma`() {
+        assertEquals(Color(0xFFF5F5F5), DarkYarikColorScheme.onSurface)
+        assertTrue(LightYarikColorScheme.onSurface != DarkYarikColorScheme.onSurface)
         assertTrue(
-            LightBitchatPalette.peerColors != DarkBitchatPalette.peerColors
+            LightYarikPalette.peerColors != DarkYarikPalette.peerColors
         )
     }
 

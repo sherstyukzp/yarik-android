@@ -14,7 +14,7 @@ import java.security.MessageDigest
 import java.util.concurrent.ConcurrentHashMap
 
 /**
- * Shared transport send wrapper that applies bitchat packet fragmentation and
+ * Shared transport send wrapper that applies Yarik packet fragmentation and
  * transfer progress before a transport writes packets to its concrete medium.
  */
 class FragmentingPacketSender(

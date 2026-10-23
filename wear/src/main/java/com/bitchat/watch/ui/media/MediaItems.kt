@@ -56,7 +56,7 @@ import com.bitchat.android.features.voice.AudioWaveformExtractor
 import com.bitchat.android.features.voice.VoiceWaveformCache
 import com.bitchat.watch.ui.theme.ChatVisualTokens
 import com.bitchat.watch.ui.roundContentSide
-import com.bitchat.watch.ui.theme.LocalBitchatPalette
+import com.bitchat.watch.ui.theme.LocalYarikPalette
 import kotlinx.coroutines.delay
 import java.io.File
 
@@ -135,7 +135,7 @@ fun FullScreenImageViewer(path: String, onClose: () -> Unit) {
  */
 @Composable
 fun VoiceNoteItem(path: String, messageID: String? = null) {
-    val palette = LocalBitchatPalette.current
+    val palette = LocalYarikPalette.current
     val context = LocalContext.current
     val liveIDs by com.bitchat.android.features.voice.LiveVoiceManager
         .getInstance(context).liveMessageIDs.collectAsState()
@@ -290,7 +290,7 @@ fun WaveformBars(
  */
 @Composable
 fun FileMessageChip(name: String, sizeBytes: Long) {
-    val palette = LocalBitchatPalette.current
+    val palette = LocalYarikPalette.current
     Row(
         modifier = Modifier
             .padding(top = 2.dp)

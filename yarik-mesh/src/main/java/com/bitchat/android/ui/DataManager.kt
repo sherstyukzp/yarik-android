@@ -16,7 +16,7 @@ class DataManager(private val context: Context) {
         private const val TAG = "DataManager"
     }
     
-    private val prefs: SharedPreferences = context.getSharedPreferences("bitchat_prefs", Context.MODE_PRIVATE)
+    private val prefs: SharedPreferences = context.getSharedPreferences("Yarik_prefs", Context.MODE_PRIVATE)
     private val gson = Gson()
     
     // Channel-related maps that need to persist state

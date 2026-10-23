@@ -10,14 +10,14 @@ import androidx.core.content.ContextCompat
 import com.bitchat.android.R
 
 /**
- * Centralized permission management for bitchat app
+ * Centralized permission management for Yarik app
  * Handles all Bluetooth and notification permissions required for the app to function
  */
 class PermissionManager(private val context: Context) {
 
     companion object {
         private const val TAG = "PermissionManager"
-        private const val PREFS_NAME = "bitchat_permissions"
+        private const val PREFS_NAME = "yarik_permissions"
         private const val KEY_FIRST_TIME_COMPLETE = "first_time_onboarding_complete"
         private const val KEY_OPTIONAL_PERMISSION_REQUESTED_PREFIX =
             "optional_permission_requested_"

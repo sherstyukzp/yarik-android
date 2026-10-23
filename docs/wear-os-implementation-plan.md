@@ -1,4 +1,4 @@
-# Bitchat for Pixel Watch — Implementation Plan
+# Yarik for Pixel Watch — Implementation Plan
 
 > **Status tracker**: each milestone carries a status (`pending` / `in-progress` / `done`) and a
 > checklist. A milestone may only be started when the previous milestone's success criteria pass.
@@ -19,12 +19,12 @@
 
 ## 1. Context for a fresh coding agent
 
-- **Reference app**: this repository (`bitchat-android`) is a fully working, decentralized BLE mesh
+- **Reference app**: this repository (`yarik-android`) is a fully working, decentralized BLE mesh
   chat client. Single Gradle module `:app`, root package `com.bitchat.android`, applicationId
   `com.bitchat.droid`. See `AGENTS.md` for the full architecture overview.
 - **Goal**: a new `:wear` Gradle module (applicationId `com.bitchat.watch`) — a standalone Wear OS
   app for the Pixel Watch. **Bluetooth mesh only**: global chat, Noise-encrypted direct messages,
-  and receiving/displaying files & images. It must be a fully interoperable bitchat client: scan,
+  and receiving/displaying files & images. It must be a fully interoperable Yarik client: scan,
   advertise, connect, relay, handshake, and exchange messages with the Android (and iOS) apps.
 - **Explicitly out of scope**: no internet features (no Nostr, no Tor/Arti, no relays), no GPS /
   geohash / location channels, no Wi-Fi Aware, no hotspot/APK sharing, no voice notes recording.
@@ -39,7 +39,7 @@
 
 Wear OS is Android. `android.util.Log`, `android.bluetooth.*`, `EncryptedSharedPreferences`
 (androidx.security), BouncyCastle, and coroutines all work on the watch, so the vast majority of
-the bitchat protocol stack compiles unmodified.
+the Yarik protocol stack compiles unmodified.
 
 In `wear/build.gradle.kts`:
 
@@ -68,7 +68,7 @@ sourceSets["main"].java.srcDir("../app/src/main/java") // with include filters (
 
 **Exclude**: `ui/**` (except forced single-file includes), `onboarding/**`, `nostr/**`, `net/**`,
 `geohash/**`, `wifi-aware/**`, `hotspot/**`, `features/voice/**`, `service/MeshForegroundService.kt`
-(wear gets its own service), `BitchatApplication.kt`, `MainActivity.kt`.
+(wear gets its own service), `YarikApplication.kt`, `MainActivity.kt`.
 
 **Tests**: the app's own unit tests for shared packages (`protocol`, `noise`, `crypto`, `mesh`)
 are wired into the `:wear` test source set the same way (srcDir + includes), so shared behavior is
@@ -86,7 +86,7 @@ Wear Compose Material3 (round-screen safe by default):
   DM conversation. Edge-swipe back, `TimeText` scaffold, rotary crown scrolling.
 - **Visual identity** (mirrors `ui/theme/` exactly): black background `#000000`, green primary
   `#32D74B`, error `#FF453A`, orange accent for self/mentions, djb2-hash stable peer colors
-  (`PeerColors.kt` algorithm), Geist Mono typography, `BitchatMotion` timing tokens
+  (`PeerColors.kt` algorithm), Geist Mono typography, `YarikMotion` timing tokens
   (120/180/240 ms) for all animations.
 - **Input**: text field using the Pixel Watch Gboard IME, plus voice dictation via
   `RecognizerIntent`. Haptic feedback on incoming messages.
@@ -97,7 +97,7 @@ Wear Compose Material3 (round-screen safe by default):
 
 - Pixel Watch connected via ADB (target device for all milestones; screencaps via
   `adb exec-out screencap`).
-- Two phones running the Android bitchat app, also on ADB, for interop testing (used heavily from
+- Two phones running the Android Yarik app, also on ADB, for interop testing (used heavily from
   M6; manual interop checks from M2 onward).
 - Design verification: at every UI milestone, take ADB screencaps of every screen and review them
   for round-screen clipping, element visibility, contrast, and touch-target size. A milestone does
@@ -132,7 +132,7 @@ Wear Compose Material3 (round-screen safe by default):
 **Success criteria**: `./gradlew :wear:assembleDebug` green; app launches on the watch;
 `git diff --name-only` shows no changes under `app/src/`.
 **Result**: PASSED — installed on Pixel Watch 3 (serial 4C201JEAYW0020), launch screencap shows
-"bitchat" wordmark (green `#32D74B`, Geist Mono, black background) correctly centered on the
+"Yarik" wordmark (green `#32D74B`, Geist Mono, black background) correctly centered on the
 round display. No `app/src/` changes.
 
 ---
@@ -170,7 +170,7 @@ AppStateStore) compiles into `:wear`; both modules' unit tests pass; `app/src/` 
 - [ ] Internal debug screen: discovered peers with RSSI (temporary, replaced by real UI in M3/M4)
 - [ ] Manual interop check: watch and one phone mutually discover
 
-**Success criteria**: the phone's bitchat app lists the watch as a connected peer and vice versa
+**Success criteria**: the phone's Yarik app lists the watch as a connected peer and vice versa
 (logcat + screencap evidence); mesh survives the screen turning off (ambient mode) for 5 minutes.
 **Result**: PASSED — phone↔watch mutual discovery via `mesh_lab.py setup`; 5-minute screen-off
 ambient test: `WearMeshForegroundService` kept the process alive, the GATT link stayed up
@@ -188,7 +188,7 @@ learning the direct address↔peerID mapping via `DirectLinkAnnouncementPolicy.o
 
 - [ ] Nickname onboarding; identity announcement over the mesh
 - [ ] Send/receive/relay public `BitchatMessage`s (relay/TTL comes free from shared mesh code)
-- [ ] Chat timeline UI (`ScalingLazyColumn`, message bubbles per bitchat style, peer colors,
+- [ ] Chat timeline UI (`ScalingLazyColumn`, message bubbles per Yarik style, peer colors,
   timestamps) + composer (IME + `RecognizerIntent` dictation) + incoming-message haptics
 - [ ] Design check: ADB screencaps of onboarding, chat (empty/populated), composer; review for
   round-screen clipping/visibility/contrast
@@ -313,7 +313,7 @@ the command if `run_adb` raises `GateError`.
 
 ### M7 — Polish & final design pass
 
-- [x] Animations/transitions per `BitchatMotion` tokens; message-appear animations; screen
+- [x] Animations/transitions per `YarikMotion` tokens; message-appear animations; screen
   transitions; auto-scroll to newest; splash screen (black, on-brand) & app icon
 - [x] Power/battery: ambient test passed (see M2 result); shared `PowerManager` duty-cycling
   active; composer/IME insets verified. Rotary crown scrolling is provided by

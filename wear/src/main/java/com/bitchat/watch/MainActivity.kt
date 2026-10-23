@@ -50,7 +50,7 @@ import com.bitchat.watch.ui.WearChatState
 import com.bitchat.watch.ui.WearFormScreen
 import com.bitchat.watch.ui.sendPrivateMessage
 import com.bitchat.watch.ui.sendPublicMessage
-import com.bitchat.watch.ui.theme.BitchatWearTheme
+import com.bitchat.watch.ui.theme.YarikWearTheme
 
 sealed interface WearScreen {
     data object Chat : WearScreen
@@ -74,7 +74,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        nicknameChosen = getSharedPreferences("bitchat_watch_prefs", Context.MODE_PRIVATE)
+        nicknameChosen = getSharedPreferences("Yarik_watch_prefs", Context.MODE_PRIVATE)
             .getBoolean("nickname_chosen", false)
         pendingLaunchRequest = restoreWearLaunchRequest(
             savedInstanceState?.getStringArrayList(KEY_PENDING_LAUNCH_REQUEST)
@@ -89,7 +89,7 @@ class MainActivity : ComponentActivity() {
         }
         refreshState()
         setContent {
-            BitchatWearTheme {
+            YarikWearTheme {
                 when {
                     !hasPermissions -> PermissionRequestScreen(onGranted = { refreshState() })
                     !bluetoothEnabled -> BluetoothEnableScreen(onEnabled = { refreshState() })
@@ -97,7 +97,7 @@ class MainActivity : ComponentActivity() {
                         initialNickname = WearMeshService.getOrCreate(applicationContext).nickname
                     ) { name ->
                         WearMeshService.getOrCreate(applicationContext).setNickname(name)
-                        getSharedPreferences("bitchat_watch_prefs", Context.MODE_PRIVATE)
+                        getSharedPreferences("Yarik_watch_prefs", Context.MODE_PRIVATE)
                             .edit().putBoolean("nickname_chosen", true).apply()
                         nicknameChosen = true
                     }
@@ -392,8 +392,8 @@ internal fun WearNavHost(
     AnimatedContent(
         targetState = navigation.screen,
         transitionSpec = {
-            fadeIn(tween(com.bitchat.watch.ui.theme.BitchatMotion.EMPHASIZED_MS)) togetherWith
-                fadeOut(tween(com.bitchat.watch.ui.theme.BitchatMotion.QUICK_MS))
+            fadeIn(tween(com.bitchat.watch.ui.theme.YarikMotion.EMPHASIZED_MS)) togetherWith
+                fadeOut(tween(com.bitchat.watch.ui.theme.YarikMotion.QUICK_MS))
         },
         label = "screenTransition"
     ) { current ->

@@ -1,4 +1,4 @@
-package com.bitchat
+package com.Yarik
 
 import com.bitchat.android.model.BitchatFilePacket
 import com.bitchat.android.model.BitchatMessage

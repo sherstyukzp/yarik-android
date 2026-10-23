@@ -38,7 +38,7 @@ import kotlinx.coroutines.launch
 class WearMeshForegroundService : Service() {
 
     companion object {
-        const val CHANNEL_ID = "bitchat_mesh"
+        const val CHANNEL_ID = "Yarik_mesh"
         const val NOTIFICATION_ID = 1
     }
 

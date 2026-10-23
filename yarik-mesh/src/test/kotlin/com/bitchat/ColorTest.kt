@@ -1,4 +1,4 @@
-package com.bitchat
+package com.Yarik
 
 import androidx.compose.ui.graphics.Color
 import org.junit.Assert.assertEquals

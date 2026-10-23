@@ -1,4 +1,4 @@
-package com.bitchat
+package com.Yarik
 
 import com.bitchat.android.mesh.PeerManager
 import com.bitchat.android.mesh.PeerManagerDelegate

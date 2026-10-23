@@ -37,7 +37,7 @@ import com.bitchat.android.services.AppStateStore
 import com.bitchat.watch.R
 import com.bitchat.watch.mesh.WearMeshService
 import com.bitchat.watch.ui.theme.ChatVisualTokens
-import com.bitchat.watch.ui.theme.LocalBitchatPalette
+import com.bitchat.watch.ui.theme.LocalYarikPalette
 import com.bitchat.watch.ui.theme.colorForPeer
 
 @Composable
@@ -47,7 +47,7 @@ fun PeopleScreen(onOpenDm: (String) -> Unit, onEditNickname: () -> Unit) {
     val unread by WearChatState.unreadDms.collectAsState()
     val mesh = WearMeshService.peek()
     val listState = rememberScalingLazyListState()
-    val palette = LocalBitchatPalette.current
+    val palette = LocalYarikPalette.current
     val nicknames = mesh?.getPeerNicknames() ?: emptyMap()
     val identityRevision by WearPeerIdentityState.revision.collectAsState()
     var liveVoiceEnabled by remember {
@@ -143,7 +143,7 @@ fun PeopleScreen(onOpenDm: (String) -> Unit, onEditNickname: () -> Unit) {
 
 @Composable
 private fun SelfRow(nickname: String, onClick: () -> Unit) {
-    val palette = LocalBitchatPalette.current
+    val palette = LocalYarikPalette.current
     Card(
         onClick = onClick,
         modifier = Modifier
@@ -185,7 +185,7 @@ private fun PersonRow(
     unreadCount: Int,
     onClick: () -> Unit
 ) {
-    val palette = LocalBitchatPalette.current
+    val palette = LocalYarikPalette.current
     Card(
         onClick = onClick,
         modifier = Modifier

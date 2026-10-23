@@ -11,7 +11,7 @@ import kotlin.random.Random
 /**
  * Centralized packet relay management
  * 
- * This class handles all relay decisions and logic for bitchat packets.
+ * This class handles all relay decisions and logic for Yarik packets.
  * All packets that aren't specifically addressed to us get processed here.
  */
 class PacketRelayManager(private val myPeerID: String) {

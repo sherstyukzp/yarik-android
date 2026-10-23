@@ -29,9 +29,9 @@ import com.bitchat.android.ui.formatTextMessageMetadata
 import com.bitchat.android.ui.formatTextMessageSender
 import com.bitchat.android.ui.isFromSelf
 import com.bitchat.android.ui.peerIdentityForMessage
-import com.bitchat.android.ui.theme.BitchatFontFamily
+import com.bitchat.android.ui.theme.YarikFontFamily
 import com.bitchat.android.ui.theme.ChatVisualTokens
-import com.bitchat.android.ui.theme.LocalBitchatPalette
+import com.bitchat.android.ui.theme.LocalYarikPalette
 import com.bitchat.android.ui.theme.MessageSenderTextStyle
 import com.bitchat.android.ui.theme.colorForPeer
 import java.text.SimpleDateFormat
@@ -58,7 +58,7 @@ fun MediaBubbleShell(
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit,
 ) {
-    val palette = LocalBitchatPalette.current
+    val palette = LocalYarikPalette.current
     val haptic = LocalHapticFeedback.current
     val isSelf = message.isFromSelf(currentUserNickname, myPeerID)
 
@@ -125,7 +125,7 @@ fun MediaBubbleShell(
                             }
                         },
                         onLongPress = { onLongPress?.invoke() },
-                        fontFamily = BitchatFontFamily,
+                        fontFamily = YarikFontFamily,
                         softWrap = false,
                         overflow = TextOverflow.Ellipsis,
                         style = MessageSenderTextStyle,
@@ -140,7 +140,7 @@ fun MediaBubbleShell(
                 ) {
                     Text(
                         text = formatTextMessageMetadata(message, timeFormatter),
-                        fontFamily = BitchatFontFamily,
+                        fontFamily = YarikFontFamily,
                     )
                     if (isSelf && message.isPrivate) {
                         message.deliveryStatus?.let { status ->

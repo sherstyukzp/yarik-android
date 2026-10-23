@@ -33,7 +33,7 @@ import kotlin.time.Duration.Companion.milliseconds
 private val MultiClickThreshold = 300.milliseconds
 
 @Composable
-fun BitChatBrandButton(
+fun YarikBrandButton(
     onClick: () -> Unit,
     onTripleClick: () -> Unit,
     contentDescription: String,

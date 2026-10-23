@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 
 /**
- * Dismisses the enclosing [BitchatBottomSheet], playing the slide-down first.
+ * Dismisses the enclosing [YarikBottomSheet], playing the slide-down first.
  *
  * `ModalBottomSheet` only animates itself out when *it* initiates the dismissal — a swipe or a tap
  * on the scrim. Anything that closes a sheet programmatically (a close button, picking an item from
@@ -32,7 +32,7 @@ val LocalSheetDismiss = staticCompositionLocalOf<(() -> Unit)?> { null }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BitchatBottomSheet(
+fun YarikBottomSheet(
     modifier: Modifier = Modifier,
     sheetState: SheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
     onDismissRequest: () -> Unit,

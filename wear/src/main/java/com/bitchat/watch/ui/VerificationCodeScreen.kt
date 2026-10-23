@@ -30,7 +30,7 @@ import androidx.wear.compose.material3.ScreenScaffold
 import androidx.wear.compose.material3.Text
 import com.bitchat.watch.mesh.WearMeshService
 import com.bitchat.watch.ui.theme.ChatVisualTokens
-import com.bitchat.watch.ui.theme.LocalBitchatPalette
+import com.bitchat.watch.ui.theme.LocalYarikPalette
 
 @Composable
 fun VerificationCodeScreen(peerID: String) {
@@ -41,7 +41,7 @@ fun VerificationCodeScreen(peerID: String) {
     }
     val myFingerprint = WearPeerIdentityState.myFingerprint(mesh)
     val listState = rememberScalingLazyListState(initialCenterItemIndex = 0)
-    val palette = LocalBitchatPalette.current
+    val palette = LocalYarikPalette.current
 
     ScreenScaffold(scrollState = listState) { scaffoldPadding ->
         val layoutDirection = LocalLayoutDirection.current
@@ -141,7 +141,7 @@ private fun FingerprintCard(
     title: String,
     fingerprint: String?
 ) {
-    val palette = LocalBitchatPalette.current
+    val palette = LocalYarikPalette.current
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier

@@ -30,7 +30,7 @@ import androidx.wear.compose.material3.Text
 import com.bitchat.watch.R
 import com.bitchat.watch.mesh.WearMeshService
 import com.bitchat.watch.ui.theme.ChatVisualTokens
-import com.bitchat.watch.ui.theme.LocalBitchatPalette
+import com.bitchat.watch.ui.theme.LocalYarikPalette
 import com.bitchat.watch.ui.theme.colorForPeer
 
 @Composable
@@ -45,7 +45,7 @@ fun UserDetailScreen(
     }
     val nickname = mesh?.getPeerNickname(peerID) ?: peerID.take(8)
     val listState = rememberScalingLazyListState(initialCenterItemIndex = 0)
-    val palette = LocalBitchatPalette.current
+    val palette = LocalYarikPalette.current
 
     ScreenScaffold(scrollState = listState) { scaffoldPadding ->
         val layoutDirection = LocalLayoutDirection.current

@@ -40,9 +40,9 @@ import com.bitchat.watch.R
 import com.bitchat.watch.mesh.WearMeshService
 import com.bitchat.watch.notification.WearNotificationCoordinator
 import com.bitchat.watch.ui.media.FullScreenImageViewer
-import com.bitchat.watch.ui.theme.BitchatMotion
+import com.bitchat.watch.ui.theme.YarikMotion
 import com.bitchat.watch.ui.theme.ChatVisualTokens
-import com.bitchat.watch.ui.theme.LocalBitchatPalette
+import com.bitchat.watch.ui.theme.LocalYarikPalette
 import com.bitchat.watch.ui.theme.colorForPeer
 
 @Composable
@@ -56,7 +56,7 @@ fun DmScreen(
     val messages = privateMessages[peerID] ?: emptyList()
     val mesh = WearMeshService.peek()
     val myPeerID = mesh?.myPeerID ?: ""
-    val palette = LocalBitchatPalette.current
+    val palette = LocalYarikPalette.current
     var viewerPath by remember { mutableStateOf<String?>(null) }
     val liveVoiceManager = remember(context) {
         com.bitchat.android.features.voice.LiveVoiceManager.getInstance(context)
@@ -140,13 +140,13 @@ private fun DmHeader(
     isVerified: Boolean,
     onClick: () -> Unit,
 ) {
-    val palette = LocalBitchatPalette.current
+    val palette = LocalYarikPalette.current
     // Floating title row: full-size at the newest messages, shrinks to its dense form
     // while scrolling up into history. Rendered as an overlay, so the animation only
     // relayouts this row, never the message list.
     val spec =
         androidx.compose.animation.core.tween<androidx.compose.ui.unit.Dp>(
-            BitchatMotion.STANDARD_MS
+            YarikMotion.STANDARD_MS
         )
     val headerIconSize by
         androidx.compose.animation.core.animateDpAsState(
@@ -157,7 +157,7 @@ private fun DmHeader(
     val headerTitleSize by
         androidx.compose.animation.core.animateFloatAsState(
             targetValue = if (expanded) 14f else 12f,
-            animationSpec = androidx.compose.animation.core.tween(BitchatMotion.STANDARD_MS),
+            animationSpec = androidx.compose.animation.core.tween(YarikMotion.STANDARD_MS),
             label = "dmHdrTitle",
         )
 

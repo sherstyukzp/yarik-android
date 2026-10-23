@@ -430,7 +430,7 @@ class WearMeshService private constructor(private val context: Context) {
         title = "Wear BLE Mesh Debug Status"
     )
 
-    private fun prefs() = context.getSharedPreferences("bitchat_watch_prefs", Context.MODE_PRIVATE)
+    private fun prefs() = context.getSharedPreferences("Yarik_watch_prefs", Context.MODE_PRIVATE)
 
     private fun loadNickname(): String =
         prefs().getString("nickname", null) ?: "watch-${myPeerID.take(4)}"

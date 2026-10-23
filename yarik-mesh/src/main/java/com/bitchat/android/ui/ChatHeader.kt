@@ -44,17 +44,17 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.bitchat.android.ui.theme.BitchatFontFamily
+import com.bitchat.android.ui.theme.YarikFontFamily
 import androidx.annotation.DrawableRes
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.foundation.layout.RowScope
 import com.bitchat.android.R
-import com.bitchat.android.core.ui.component.button.BitChatBrandButton
+import com.bitchat.android.core.ui.component.button.YarikBrandButton
 import com.bitchat.android.core.ui.component.button.CloseButton
 import com.bitchat.android.net.ArtiTorManager
 import com.bitchat.android.net.TorMode
-import com.bitchat.android.ui.theme.BitchatMotion
-import com.bitchat.android.ui.theme.LocalBitchatPalette
+import com.bitchat.android.ui.theme.YarikMotion
+import com.bitchat.android.ui.theme.LocalYarikPalette
 
 /**
  * Header components for ChatScreen
@@ -156,7 +156,7 @@ internal data class TorConnectionVisual(
 
 @Composable
 internal fun rememberTorConnectionVisual(normal: Color): TorConnectionVisual {
-    val palette = LocalBitchatPalette.current
+    val palette = LocalYarikPalette.current
     val colorScheme = MaterialTheme.colorScheme
     val torStatus by remember { ArtiTorManager.getInstance() }.statusFlow.collectAsState()
 
@@ -174,7 +174,7 @@ internal fun rememberTorConnectionVisual(normal: Color): TorConnectionVisual {
 
     val animatedTint by animateColorAsState(
         targetValue = target.tint,
-        animationSpec = tween(BitchatMotion.STANDARD_MS, easing = FastOutSlowInEasing),
+        animationSpec = tween(YarikMotion.STANDARD_MS, easing = FastOutSlowInEasing),
         label = "torConnectionTint"
     )
     return TorConnectionVisual(tint = animatedTint, isProgress = target.isProgress)
@@ -195,7 +195,7 @@ internal fun TorAwareHeaderIcon(
 ) {
     val progressFade by animateFloatAsState(
         targetValue = if (isProgress) 1f else 0f,
-        animationSpec = tween(BitchatMotion.EMPHASIZED_MS, easing = FastOutSlowInEasing),
+        animationSpec = tween(YarikMotion.EMPHASIZED_MS, easing = FastOutSlowInEasing),
         label = "torGlowFade"
     )
     val pulse = if (progressFade > 0.01f) {
@@ -262,7 +262,7 @@ internal fun TorAwareHeaderIcon(
 ) {
     val progressFade by animateFloatAsState(
         targetValue = if (isProgress) 1f else 0f,
-        animationSpec = tween(BitchatMotion.EMPHASIZED_MS, easing = FastOutSlowInEasing),
+        animationSpec = tween(YarikMotion.EMPHASIZED_MS, easing = FastOutSlowInEasing),
         label = "torPainterGlowFade"
     )
     val pulse = if (progressFade > 0.01f) {
@@ -328,7 +328,7 @@ fun NoiseSessionIcon(
     sessionState: String?,
     modifier: Modifier = Modifier
 ) {
-    val palette = LocalBitchatPalette.current
+    val palette = LocalYarikPalette.current
     val colorScheme = MaterialTheme.colorScheme
 
     val (targetTint, isProgress, contentDescription) = when {
@@ -542,7 +542,7 @@ fun NicknameEditor(
             onValueChange = onValueChange,
             textStyle = MaterialTheme.typography.bodyMedium.copy(
                 color = colorScheme.primary,
-                fontFamily = BitchatFontFamily,
+                fontFamily = YarikFontFamily,
                 fontSize = HeaderTextSize
             ),
             cursorBrush = SolidColor(colorScheme.primary),
@@ -573,7 +573,7 @@ fun PeerCounter(
     modifier: Modifier = Modifier,
     showJoinedChannelCount: Boolean = true
 ) {
-    val palette = LocalBitchatPalette.current
+    val palette = LocalYarikPalette.current
     val colorScheme = MaterialTheme.colorScheme
 
     // Compute channel-aware people count and color (matches iOS logic exactly)
@@ -595,7 +595,7 @@ fun PeerCounter(
     // crosses zero.
     val animatedCountColor by animateColorAsState(
         targetValue = countColor,
-        animationSpec = tween(BitchatMotion.STANDARD_MS, easing = FastOutSlowInEasing),
+        animationSpec = tween(YarikMotion.STANDARD_MS, easing = FastOutSlowInEasing),
         label = "peerCountColor"
     )
 
@@ -719,7 +719,7 @@ private fun MainHeader(
     viewModel: ChatViewModel
 ) {
     val colorScheme = MaterialTheme.colorScheme
-    val palette = LocalBitchatPalette.current
+    val palette = LocalYarikPalette.current
     val connectedPeers by viewModel.connectedPeers.collectAsStateWithLifecycle()
     val joinedChannels by viewModel.joinedChannels.collectAsStateWithLifecycle()
     val hasUnreadChannels by viewModel.unreadChannelMessages.collectAsStateWithLifecycle()
@@ -739,7 +739,7 @@ private fun MainHeader(
             verticalAlignment = Alignment.CenterVertically
         ) {
             // Keep the brand and trailing actions fixed. Only the nickname yields under pressure.
-            BitChatBrandButton(
+            YarikBrandButton(
                 onClick = onTitleClick,
                 onTripleClick = onTripleTitleClick,
                 contentDescription = stringResource(R.string.cd_open_about),

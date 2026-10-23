@@ -1,55 +1,55 @@
-# Upstream mesh stack (Android)
+# Upstream integration (Yarik Android)
 
-Network and protocol code lives in the **`:yarik-mesh`** Gradle module, vendored from [permissionlesstech/bitchat-android](https://github.com/permissionlesstech/bitchat-android). The `:app` module is Yarik’s product shell only.
+Yarik Android ships the full [permissionlesstech/yarik-android](https://github.com/permissionlesstech/yarik-android) tree at the repository root.
 
 ## Pinned upstream commit
 
 | Field | Value |
 |-------|--------|
-| Repository | `https://github.com/permissionlesstech/bitchat-android.git` |
+| Repository | `https://github.com/permissionlesstech/yarik-android.git` |
 | Branch | `main` |
 | Commit | `dfc67dad41691128bc6e7425bd69f2f409cb5bbf` |
 | Imported | 2026-10-23 |
 
 ## Strategy
 
-**Library module (`:yarik-mesh`) with documented SHA + git remote for sync** (not a submodule).
+**Root vendor copy with documented SHA + git remote for sync** (not a submodule).
 
-- Remote name: `mesh-upstream-android` → upstream URL above.
-- Import path: upstream tree at the pinned SHA; mesh sources under `yarik-mesh/`, not the Yarik app shell.
-- Sync by merging upstream into `yarik-mesh/` and updating this commit hash.
+- Remote name: `yarik-android` → upstream URL above.
+- Initial import: checked out upstream `main` at the pinned SHA onto branch `cursor/integrate-Yarik-909b`, replacing the empty Yarik Compose starter.
+- Rationale: upstream is a single Gradle multi-module app (`:app`, `:wear`); a submodule would complicate CI and local paths; subtree at root is equivalent to this import for a greenfield Yarik repo.
 
 ### Syncing newer upstream
 
 ```bash
-git fetch mesh-upstream-android main
-# merge or cherry-pick into yarik-mesh, resolve conflicts
+git fetch yarik-android main
+# Review diff, then merge (resolve conflicts in branding/docs only if we diverge):
+git merge yarik-android/main -m "chore: sync yarik-android upstream"
 ```
 
 After merge, update the commit hash in this file.
 
-## Wire / protocol identifiers (unchanged for interop)
+## Branding (MVP)
 
-These stay as upstream defines them; they are **not** shown in the Yarik app UI:
+| Setting | Value | Notes |
+|---------|--------|--------|
+| `applicationId` | `com.bitchat.droid` | **Unchanged** for MVP — matches official Play/protocol peers, zero Gradle churn. |
+| `namespace` | `com.bitchat.android` | Upstream package layout. |
+| Display name | Upstream strings | Custom Yarik UI deferred; transport proof uses upstream IRC-style UI. |
 
-| Kind | Example | Notes |
-|------|---------|--------|
-| Deep link scheme | `bitchat://verify` | Re-enable in `:app` manifest when verification UX ships |
-| Bluetooth / Wi‑Fi Aware service names | upstream constants in mesh code | Required for peer discovery |
-| Kotlin packages | `com.bitchat.android.*` | Internal to `:yarik-mesh`; prefer new API under `com.yarik.mesh.*` |
+Future rebrand: change `applicationId` to `com.yarik.*` only when signing keys and side-by-side install with official Yarik are required.
 
-| Setting | Yarik value | Notes |
-|---------|-------------|--------|
-| `:app` `applicationId` | `com.yarik.android` | Install identity |
-| `:yarik-mesh` `namespace` | `com.bitchat.android` | Matches upstream layout |
+## First mesh message (manual test)
 
-## Manual mesh smoke (after chat UI wired)
+Two physical Android devices (BLE cannot be emulated reliably):
 
-Two physical Android devices with BLE:
+1. Install debug APK on both: `./gradlew :app:installDebug`
+2. Grant **Nearby devices / Bluetooth** and **Location** (required for BLE scan on Android).
+3. Disable battery optimization for the app if mesh drops in background (Settings → App → Battery).
+4. Open app on both; ensure mesh indicator shows peers (same room, within ~10 m, Bluetooth on).
+5. Stay on default **`#bluetooth`** public mesh channel (IRC-style input at bottom).
+6. On device A, type a message and send. Confirm it appears on device B (and vice versa).
 
-1. `./gradlew :app:installDebug` on both
-2. Grant Bluetooth / Nearby devices, Location, Notifications
-3. Confirm mesh peers on the chat screen (future UI)
-4. Send on `#bluetooth` and verify receive
+**Mesh Lab (official):** Upstream documents a mesh testing skill under `.agents/skills/mesh-lab/` for controlled multi-device scenarios; use when available in your environment.
 
-Shell-only build today: `./gradlew :app:assembleDebug` and launch — starter home + background mesh init.
+Single-device smoke: `./gradlew :app:assembleDebug` and launch — UI loads; mesh send/receive requires a second peer.

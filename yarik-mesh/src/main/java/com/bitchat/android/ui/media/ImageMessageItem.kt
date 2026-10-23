@@ -23,13 +23,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.unit.dp
-import com.bitchat.android.ui.theme.BitchatFontFamily
+import com.bitchat.android.ui.theme.YarikFontFamily
 import com.bitchat.android.mesh.MeshService
 import com.bitchat.android.model.BitchatMessage
 import com.bitchat.android.model.BitchatMessageType
 import androidx.compose.material3.ColorScheme
 import com.bitchat.android.core.ui.component.text.AnnotatedClickableText
-import com.bitchat.android.ui.theme.LocalBitchatPalette
+import com.bitchat.android.ui.theme.LocalYarikPalette
 import java.text.SimpleDateFormat
 
 @Composable
@@ -48,7 +48,7 @@ fun ImageMessageItem(
     showSender: Boolean = true,
     bubbles: Boolean = false
 ) {
-    val palette = LocalBitchatPalette.current
+    val palette = LocalYarikPalette.current
     val path = message.content.trim()
     // Bubble mode wraps the image in the same tinted shell as text bubbles; Matrix mode keeps
     // the flat header-plus-card layout.
@@ -120,7 +120,7 @@ fun ImageMessageItem(
                 }
             },
             onLongPress = { onMessageLongPress?.invoke(message) },
-            fontFamily = BitchatFontFamily,
+            fontFamily = YarikFontFamily,
             color = colorScheme.onSurface,
         )
 
@@ -139,7 +139,7 @@ fun ImageMessageItem(
                 )
             }
         } else {
-            Text(text = stringResource(com.bitchat.android.R.string.image_unavailable), fontFamily = BitchatFontFamily, color = Color.Gray)
+            Text(text = stringResource(com.bitchat.android.R.string.image_unavailable), fontFamily = YarikFontFamily, color = Color.Gray)
         }
     }
 }
@@ -158,7 +158,7 @@ private fun ImageMessageCard(
     onLongPress: (() -> Unit)?,
 ) {
     if (bmp == null) {
-        Text(text = stringResource(com.bitchat.android.R.string.image_unavailable), fontFamily = BitchatFontFamily, color = Color.Gray)
+        Text(text = stringResource(com.bitchat.android.R.string.image_unavailable), fontFamily = YarikFontFamily, color = Color.Gray)
         return
     }
     val img = bmp.asImageBitmap()

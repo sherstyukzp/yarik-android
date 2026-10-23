@@ -320,7 +320,7 @@ class PeerAvailabilityNotifierTest {
 
     private fun testTextProvider(): PeerAvailabilityTextProvider {
         return object : PeerAvailabilityTextProvider {
-            override fun title(): String = "Bitchatters nearby"
+            override fun title(): String = "Yarikters nearby"
 
             override fun body(peerCount: Int): String = "$peerCount people around"
         }

@@ -25,7 +25,7 @@ internal class AndroidConversationStorageCipher(
     private val keyAlias: String = DEFAULT_KEY_ALIAS
 ) : ConversationStorageCipher {
     companion object {
-        internal const val DEFAULT_KEY_ALIAS = "bitchat_conversation_storage_v1"
+        internal const val DEFAULT_KEY_ALIAS = "Yarik_conversation_storage_v1"
         private const val KEYSTORE_PROVIDER = "AndroidKeyStore"
         private const val TRANSFORMATION = "AES/GCM/NoPadding"
         private const val ENVELOPE_VERSION: Byte = 1

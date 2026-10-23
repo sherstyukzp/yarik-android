@@ -1,7 +1,7 @@
 package com.bitchat.android.ui
 
 import android.os.Build
-import com.bitchat.android.ui.theme.BitchatFontFamily
+import com.bitchat.android.ui.theme.YarikFontFamily
 // [Goose] Bridge file share events to ViewModel via dispatcher is installed in ChatScreen composition
 
 // [Goose] Installing FileShareDispatcher handler in ChatScreen to forward file sends to ViewModel
@@ -50,7 +50,7 @@ import com.bitchat.android.model.BitchatMessage
 import com.bitchat.android.nostr.LocationNotesManager
 import com.bitchat.android.nostr.NearbyNotesController
 import com.bitchat.android.ui.media.FullScreenImageViewer
-import com.bitchat.android.ui.theme.BitchatMotion
+import com.bitchat.android.ui.theme.YarikMotion
 
 /**
  * Main ChatScreen - REFACTORED to use component-based architecture
@@ -478,13 +478,13 @@ fun ChatScreen(
             // Short and eased: the button appears mid-scroll, so a slow entrance draws the eye
             // away from the messages the user is actually reading.
             enter = slideInVertically(
-                animationSpec = tween(BitchatMotion.STANDARD_MS, easing = FastOutSlowInEasing),
+                animationSpec = tween(YarikMotion.STANDARD_MS, easing = FastOutSlowInEasing),
                 initialOffsetY = { it / 2 }
-            ) + fadeIn(tween(BitchatMotion.STANDARD_MS)),
+            ) + fadeIn(tween(YarikMotion.STANDARD_MS)),
             exit = slideOutVertically(
-                animationSpec = tween(BitchatMotion.QUICK_MS, easing = FastOutSlowInEasing),
+                animationSpec = tween(YarikMotion.QUICK_MS, easing = FastOutSlowInEasing),
                 targetOffsetY = { it / 2 }
-            ) + fadeOut(tween(BitchatMotion.QUICK_MS)),
+            ) + fadeOut(tween(YarikMotion.QUICK_MS)),
             modifier = Modifier
                 .align(Alignment.BottomEnd)
                 .padding(end = 16.dp, bottom = composerHeight + 8.dp)
@@ -620,7 +620,7 @@ private fun NearbyNotesStrip(
                 },
                 modifier = Modifier.weight(1f),
                 color = MaterialTheme.colorScheme.primary,
-                fontFamily = BitchatFontFamily,
+                fontFamily = YarikFontFamily,
                 fontSize = 12.sp,
             )
             Text(
@@ -696,18 +696,18 @@ fun ChatInputSection(
 
         AnimatedVisibility(
             visible = mentionPickerVisible,
-            enter = fadeIn(tween(BitchatMotion.STANDARD_MS)) +
+            enter = fadeIn(tween(YarikMotion.STANDARD_MS)) +
                 expandVertically(
                     animationSpec = tween(
-                        BitchatMotion.STANDARD_MS,
+                        YarikMotion.STANDARD_MS,
                         easing = FastOutSlowInEasing
                     ),
                     expandFrom = Alignment.Bottom
                 ),
-            exit = fadeOut(tween(BitchatMotion.QUICK_MS)) +
+            exit = fadeOut(tween(YarikMotion.QUICK_MS)) +
                 shrinkVertically(
                     animationSpec = tween(
-                        BitchatMotion.QUICK_MS,
+                        YarikMotion.QUICK_MS,
                         easing = FastOutSlowInEasing
                     ),
                     shrinkTowards = Alignment.Bottom

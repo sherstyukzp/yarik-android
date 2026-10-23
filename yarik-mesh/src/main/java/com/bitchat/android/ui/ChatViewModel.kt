@@ -50,7 +50,7 @@ private data class ConversationLiveIdentityState(
 )
 
 /**
- * Refactored ChatViewModel - Main coordinator for bitchat functionality
+ * Refactored ChatViewModel - Main coordinator for Yarik functionality
  * Delegates specific responsibilities to specialized managers while maintaining 100% iOS compatibility
  */
 class ChatViewModel(

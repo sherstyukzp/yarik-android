@@ -10,7 +10,7 @@ import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
 /**
- * A trusted location that serves the latest signed universal BitChat APK.
+ * A trusted location that serves the latest signed universal Yarik APK.
  *
  * Sources are tried in order. A source may list compatibility filenames, which
  * are only used when the preferred asset is absent. Adding a mirror should only
@@ -48,11 +48,11 @@ internal object DefaultApkDownloadSources {
             id = GITHUB_ID,
             displayName = "GitHub Releases",
             latestApkUrls = listOf(
-                "https://github.com/permissionlesstech/bitchat-android/releases/latest/" +
-                    "download/bitchat-android-universal.apk",
+                "https://github.com/permissionlesstech/yarik-android/releases/latest/" +
+                    "download/yarik-android-universal.apk",
                 // Releases published before the stable asset-name rollout use
                 // this filename. Remove when supported releases all use the primary URL.
-                "https://github.com/permissionlesstech/bitchat-android/releases/latest/" +
+                "https://github.com/permissionlesstech/yarik-android/releases/latest/" +
                     "download/app-universal-release.apk"
             )
         )
@@ -85,7 +85,7 @@ enum class ApkDownloadFailureReason(@StringRes val messageRes: Int) {
     UntrustedKey(R.string.prepare_apk_error_untrusted_key),
     NotUniversal(R.string.prepare_apk_error_not_universal),
     ApkUnreadable(R.string.prepare_apk_error_apk_unreadable),
-    NotBitchat(R.string.prepare_apk_error_not_bitchat),
+    NotYarikApk(R.string.prepare_apk_error_not_yarik),
     NoVersion(R.string.prepare_apk_error_no_version),
     SourceFailed(R.string.prepare_apk_error_source_failed),
     AllSourcesFailed(R.string.prepare_apk_error_all_sources);

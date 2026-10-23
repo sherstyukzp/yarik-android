@@ -13,12 +13,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.runtime.CompositionLocalProvider
-import com.bitchat.android.ui.theme.BitchatFontFamily
+import com.bitchat.android.ui.theme.YarikFontFamily
 import com.bitchat.android.core.ui.component.button.CloseButton
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BitchatSheetTopBar(
+fun YarikSheetTopBar(
     onClose: () -> Unit,
     modifier: Modifier = Modifier,
     backgroundAlpha: Float = 0.98f,
@@ -48,7 +48,7 @@ fun BitchatSheetTopBar(
 }
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BitchatSheetCenterTopBar(
+fun YarikSheetCenterTopBar(
     onClose: () -> Unit,
     modifier: Modifier = Modifier,
     backgroundAlpha: Float = 0.98f,
@@ -78,12 +78,12 @@ fun BitchatSheetCenterTopBar(
 }
 
 @Composable
-fun BitchatSheetTitle(text: String) {
+fun YarikSheetTitle(text: String) {
     Text(
         text = text,
         style = MaterialTheme.typography.titleMedium.copy(
             fontWeight = FontWeight.Bold,
-            fontFamily = BitchatFontFamily
+            fontFamily = YarikFontFamily
         )
     )
 }

@@ -4,7 +4,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material.icons.outlined.*
-import com.bitchat.android.ui.theme.BitchatFontFamily
+import com.bitchat.android.ui.theme.YarikFontFamily
 import com.bitchat.android.R
 import android.text.format.DateUtils
 import android.util.Log
@@ -52,19 +52,19 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.bitchat.android.core.ui.component.button.CloseButton
-import com.bitchat.android.core.ui.component.sheet.BitchatBottomSheet
-import com.bitchat.android.core.ui.component.sheet.BitchatSheetCenterTopBar
+import com.bitchat.android.core.ui.component.sheet.YarikBottomSheet
+import com.bitchat.android.core.ui.component.sheet.YarikSheetCenterTopBar
 import com.bitchat.android.core.ui.component.sheet.LocalSheetDismiss
-import com.bitchat.android.core.ui.component.sheet.BitchatSheetTitle
-import com.bitchat.android.core.ui.component.sheet.BitchatSheetTopBar
+import com.bitchat.android.core.ui.component.sheet.YarikSheetTitle
+import com.bitchat.android.core.ui.component.sheet.YarikSheetTopBar
 import com.bitchat.android.favorites.FavoriteRelationship
 import com.bitchat.android.favorites.FavoritesPersistenceService
 import com.bitchat.android.geohash.ChannelID
 import com.bitchat.android.identity.SecureIdentityStateManager
 import com.bitchat.android.model.BitchatMessageType
 import com.bitchat.android.ui.theme.BASE_FONT_SIZE
-import com.bitchat.android.ui.theme.BitchatMotion
-import com.bitchat.android.ui.theme.LocalBitchatPalette
+import com.bitchat.android.ui.theme.YarikMotion
+import com.bitchat.android.ui.theme.LocalYarikPalette
 import com.bitchat.android.ui.theme.colorForPeer
 import com.bitchat.android.nostr.GeohashAliasRegistry
 import com.bitchat.android.nostr.GeohashConversationRegistry
@@ -164,7 +164,7 @@ fun MeshPeerListSheet(
     )
 
     if (isPresented) {
-        BitchatBottomSheet(
+        YarikBottomSheet(
             modifier = modifier,
             onDismissRequest = onDismiss,
             sheetState = sheetState,
@@ -199,12 +199,12 @@ fun MeshPeerListSheet(
                                     .padding(top = 10.dp),
                                 singleLine = true,
                                 textStyle = MaterialTheme.typography.bodyMedium.copy(
-                                    fontFamily = BitchatFontFamily
+                                    fontFamily = YarikFontFamily
                                 ),
                                 placeholder = {
                                     Text(
                                         stringResource(R.string.search_conversations),
-                                        fontFamily = BitchatFontFamily
+                                        fontFamily = YarikFontFamily
                                     )
                                 },
                                 leadingIcon = {
@@ -450,9 +450,9 @@ fun MeshPeerListSheet(
                 }
 
                 // TopBar (animated)
-                BitchatSheetTopBar(
+                YarikSheetTopBar(
                     title = {
-                        BitchatSheetTitle(text = stringResource(id = R.string.your_network))
+                        YarikSheetTitle(text = stringResource(id = R.string.your_network))
                     },
                     backgroundAlpha = topBarAlpha,
                     actions = {
@@ -502,7 +502,7 @@ fun MeshPeerListSheet(
                 title = {
                     Text(
                         text = stringResource(R.string.delete_conversation_title),
-                        fontFamily = BitchatFontFamily
+                        fontFamily = YarikFontFamily
                     )
                 },
                 text = {
@@ -511,7 +511,7 @@ fun MeshPeerListSheet(
                             R.string.delete_conversation_message,
                             conversation.displayName
                         ),
-                        fontFamily = BitchatFontFamily
+                        fontFamily = YarikFontFamily
                     )
                 },
                 confirmButton = {
@@ -547,7 +547,7 @@ fun MeshPeerListSheet(
                         Text(
                             text = stringResource(R.string.delete),
                             color = MaterialTheme.colorScheme.error,
-                            fontFamily = BitchatFontFamily
+                            fontFamily = YarikFontFamily
                         )
                     }
                 },
@@ -555,7 +555,7 @@ fun MeshPeerListSheet(
                     TextButton(onClick = { pendingConversationDelete = null }) {
                         Text(
                             text = stringResource(android.R.string.cancel),
-                            fontFamily = BitchatFontFamily
+                            fontFamily = YarikFontFamily
                         )
                     }
                 }
@@ -577,7 +577,7 @@ private fun ChannelRow(
     onChannelClick: () -> Unit,
     onLeaveChannel: () -> Unit,
 ) {
-    val palette = LocalBitchatPalette.current
+    val palette = LocalYarikPalette.current
 
     Row(
         modifier = Modifier
@@ -601,7 +601,7 @@ private fun ChannelRow(
             } else {
                 Text(
                     text = "#",
-                    fontFamily = BitchatFontFamily,
+                    fontFamily = YarikFontFamily,
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Medium,
                     color = palette.textTertiary
@@ -613,7 +613,7 @@ private fun ChannelRow(
 
         Text(
             text = channel,
-            fontFamily = BitchatFontFamily,
+            fontFamily = YarikFontFamily,
             fontSize = 14.sp,
             color = if (isSelected) colorScheme.primary else colorScheme.onSurface,
             fontWeight = if (isSelected) FontWeight.SemiBold else FontWeight.Medium,
@@ -648,7 +648,7 @@ fun PeopleSection(
         SecureIdentityStateManager(context.applicationContext)
     }
 
-    val palette = LocalBitchatPalette.current
+    val palette = LocalYarikPalette.current
 
     Column(modifier = modifier) {
         SheetIconSectionHeader(
@@ -668,7 +668,7 @@ fun PeopleSection(
                 if (connectedPeers.isEmpty()) {
                     Text(
                         text = stringResource(id = R.string.no_one_connected),
-                        fontFamily = BitchatFontFamily,
+                        fontFamily = YarikFontFamily,
                         fontSize = 12.sp,
                         color = palette.textTertiary,
                         modifier = Modifier
@@ -919,7 +919,7 @@ private fun ConversationSectionStatus(
             Text(
                 text = text,
                 style = MaterialTheme.typography.bodyMedium.copy(
-                    fontFamily = BitchatFontFamily
+                    fontFamily = YarikFontFamily
                 ),
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -936,7 +936,7 @@ private fun ConversationGroupLabel(text: String) {
             .padding(horizontal = AboutHorizontalPadding + 4.dp)
             .padding(top = 12.dp, bottom = 6.dp),
         style = MaterialTheme.typography.labelMedium.copy(
-            fontFamily = BitchatFontFamily,
+            fontFamily = YarikFontFamily,
             fontWeight = FontWeight.SemiBold
         ),
         color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -1081,7 +1081,7 @@ private fun ConversationSwipeItem(
                                 stringResource(R.string.delete)
                             },
                             style = MaterialTheme.typography.labelMedium.copy(
-                                fontFamily = BitchatFontFamily,
+                                fontFamily = YarikFontFamily,
                                 fontWeight = FontWeight.SemiBold
                             )
                         )
@@ -1130,7 +1130,7 @@ private fun ConversationRow(
     onReadStateRequested: () -> Unit,
     onDeleteRequested: () -> Unit
 ) {
-    val palette = LocalBitchatPalette.current
+    val palette = LocalYarikPalette.current
     val colorScheme = MaterialTheme.colorScheme
     var showActions by remember { mutableStateOf(false) }
     val liveIdentityIDs = conversation.identityAliases +
@@ -1293,7 +1293,7 @@ private fun ConversationRow(
                 Text(
                     text = truncateNickname(baseNameRaw),
                     style = MaterialTheme.typography.bodyLarge.copy(
-                        fontFamily = BitchatFontFamily,
+                        fontFamily = YarikFontFamily,
                         fontWeight = if (conversation.unreadCount > 0) {
                             FontWeight.Bold
                         } else {
@@ -1308,7 +1308,7 @@ private fun ConversationRow(
                     Text(
                         text = suffix,
                         style = MaterialTheme.typography.bodyMedium.copy(
-                            fontFamily = BitchatFontFamily,
+                            fontFamily = YarikFontFamily,
                             fontWeight = FontWeight.Medium
                         ),
                         color = assignedColor.copy(alpha = SUFFIX_ALPHA)
@@ -1338,7 +1338,7 @@ private fun ConversationRow(
                 Text(
                     text = messagePreview,
                     style = MaterialTheme.typography.bodySmall.copy(
-                        fontFamily = BitchatFontFamily,
+                        fontFamily = YarikFontFamily,
                         fontWeight = if (!conversation.draft.isNullOrBlank()) {
                             FontWeight.Medium
                         } else {
@@ -1360,7 +1360,7 @@ private fun ConversationRow(
                         relativeTime
                     ),
                     style = MaterialTheme.typography.labelSmall.copy(
-                        fontFamily = BitchatFontFamily
+                        fontFamily = YarikFontFamily
                     ),
                     color = palette.textTertiary,
                     maxLines = 1
@@ -1486,7 +1486,7 @@ private fun PeerItem(
     val isMe = displayName == "You" || peerID == currentNickname
 
     // Get consistent peer color (iOS-compatible)
-    val palette = LocalBitchatPalette.current
+    val palette = LocalYarikPalette.current
     val assignedColor = colorForPeer(
         viewModel.peerIdentityForMeshPeer(peerID),
         palette
@@ -1547,7 +1547,7 @@ private fun PeerItem(
         ) {
             Text(
                 text = baseName,
-                fontFamily = BitchatFontFamily,
+                fontFamily = YarikFontFamily,
                 fontSize = 14.sp,
                 fontWeight = if (isMe) FontWeight.Bold else FontWeight.Medium,
                 color = baseColor,
@@ -1558,7 +1558,7 @@ private fun PeerItem(
             if (suffix.isNotEmpty()) {
                 Text(
                     text = suffix,
-                    fontFamily = BitchatFontFamily,
+                    fontFamily = YarikFontFamily,
                     fontSize = 14.sp,
                     fontWeight = if (isMe) FontWeight.Bold else FontWeight.Medium,
                     color = baseColor.copy(alpha = SUFFIX_ALPHA)
@@ -1604,20 +1604,20 @@ private fun UnreadBadge(
     colorScheme: ColorScheme,
     modifier: Modifier = Modifier
 ) {
-    val palette = LocalBitchatPalette.current
+    val palette = LocalYarikPalette.current
     // Scale/fade in and out so a badge appearing while the sheet is open is noticed, and one
     // clearing does not just blink away.
     AnimatedVisibility(
         visible = count > 0,
-        enter = fadeIn(tween(BitchatMotion.STANDARD_MS)) +
+        enter = fadeIn(tween(YarikMotion.STANDARD_MS)) +
             scaleIn(
                 initialScale = 0.5f,
-                animationSpec = tween(BitchatMotion.STANDARD_MS, easing = FastOutSlowInEasing)
+                animationSpec = tween(YarikMotion.STANDARD_MS, easing = FastOutSlowInEasing)
             ),
-        exit = fadeOut(tween(BitchatMotion.QUICK_MS)) +
+        exit = fadeOut(tween(YarikMotion.QUICK_MS)) +
             scaleOut(
                 targetScale = 0.5f,
-                animationSpec = tween(BitchatMotion.QUICK_MS, easing = FastOutSlowInEasing)
+                animationSpec = tween(YarikMotion.QUICK_MS, easing = FastOutSlowInEasing)
             ),
         modifier = modifier
     ) {
@@ -1637,7 +1637,7 @@ private fun UnreadBadge(
                 style = MaterialTheme.typography.labelSmall,
                 fontSize = 10.sp,
                 fontWeight = FontWeight.Bold,
-                fontFamily = BitchatFontFamily,
+                fontFamily = YarikFontFamily,
                 color = Color.Black
             )
         }
@@ -1788,7 +1788,7 @@ fun PrivateChatSheet(
         viewModel.isPeerVerified(peerID, verifiedFingerprints)
     }
 
-    val palette = LocalBitchatPalette.current
+    val palette = LocalYarikPalette.current
     // Three-state star: grey outline (no relation), orange outline (they favorited us),
     // filled orange (we favorited them, mutual or not).
     val favoriteStarTint by animateColorAsState(
@@ -1796,7 +1796,7 @@ fun PrivateChatSheet(
             isFavorite || theyFavoritedUs -> palette.accentOrange
             else -> colorScheme.onSurfaceVariant
         },
-        animationSpec = tween(BitchatMotion.STANDARD_MS, easing = FastOutSlowInEasing),
+        animationSpec = tween(YarikMotion.STANDARD_MS, easing = FastOutSlowInEasing),
         label = "favoriteStarTint"
     )
     val sheetState = rememberModalBottomSheetState(
@@ -1804,7 +1804,7 @@ fun PrivateChatSheet(
     )
 
     if (isPresented) {
-        BitchatBottomSheet(
+        YarikBottomSheet(
             onDismissRequest = onDismiss,
             sheetState = sheetState,
         ) {

@@ -6,12 +6,12 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 
-val BitChatIcon: ImageVector
+val YarikIcon: ImageVector
     get() {
-        _BitChatIcon?.let { return it }
+        _YarikIcon?.let { return it }
 
         return ImageVector.Builder(
-            name = "BitChatIcon",
+            name = "YarikIcon",
             defaultWidth = 24.dp,
             defaultHeight = 24.dp,
             viewportWidth = 8f,
@@ -42,7 +42,7 @@ val BitChatIcon: ImageVector
                 lineTo(2f, 1f)
                 close()
             }
-        }.build().also { _BitChatIcon = it }
+        }.build().also { _YarikIcon = it }
     }
 
-private var _BitChatIcon: ImageVector? = null
+private var _YarikIcon: ImageVector? = null

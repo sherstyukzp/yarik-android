@@ -49,9 +49,9 @@ import com.bitchat.watch.ui.media.FileMessageChip
 import com.bitchat.watch.ui.media.FullScreenImageViewer
 import com.bitchat.watch.ui.media.ImageMessageItem
 import com.bitchat.watch.ui.media.VoiceNoteItem
-import com.bitchat.watch.ui.theme.BitchatMotion
+import com.bitchat.watch.ui.theme.YarikMotion
 import com.bitchat.watch.ui.theme.ChatVisualTokens
-import com.bitchat.watch.ui.theme.LocalBitchatPalette
+import com.bitchat.watch.ui.theme.LocalYarikPalette
 import com.bitchat.watch.ui.theme.colorForPeer
 import java.io.File
 import java.text.SimpleDateFormat
@@ -125,7 +125,7 @@ private fun ChatHeader(
     // relayouts this row, never the message list.
     val spec =
         androidx.compose.animation.core.tween<androidx.compose.ui.unit.Dp>(
-            BitchatMotion.STANDARD_MS
+            YarikMotion.STANDARD_MS
         )
     val iconSize by
         androidx.compose.animation.core.animateDpAsState(
@@ -136,7 +136,7 @@ private fun ChatHeader(
     val titleSize by
         androidx.compose.animation.core.animateFloatAsState(
             targetValue = if (expanded) 14f else 12f,
-            animationSpec = androidx.compose.animation.core.tween(BitchatMotion.STANDARD_MS),
+            animationSpec = androidx.compose.animation.core.tween(YarikMotion.STANDARD_MS),
             label = "hdrTitle",
         )
 
@@ -180,7 +180,7 @@ private fun ChatHeader(
             Icon(
                 imageVector = Icons.Filled.MailOutline,
                 contentDescription = "$unreadDms unread messages",
-                tint = LocalBitchatPalette.current.accentOrange,
+                tint = LocalYarikPalette.current.accentOrange,
                 modifier = Modifier.padding(start = 6.dp).size(iconSize),
             )
             Text(
@@ -189,7 +189,7 @@ private fun ChatHeader(
                 fontSize = 12.sp,
                 lineHeight = (titleSize * 1.3f).sp,
                 maxLines = 1,
-                color = LocalBitchatPalette.current.accentOrange,
+                color = LocalYarikPalette.current.accentOrange,
                 modifier = Modifier.padding(start = 2.dp),
             )
         }
@@ -203,24 +203,24 @@ fun MessageItem(
     onOpenImage: (String) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
-    val palette = LocalBitchatPalette.current
+    val palette = LocalYarikPalette.current
     val isSelf = message.senderPeerID == myPeerID
     val senderColor = when {
         isSelf -> palette.accentOrange
         else -> colorForPeer(message.sender + (message.senderPeerID ?: ""), palette)
     }
 
-    // Snappy appear animation for incoming messages (BitchatMotion.EMPHASIZED_MS)
+    // Snappy appear animation for incoming messages (YarikMotion.EMPHASIZED_MS)
     var appeared by remember { mutableStateOf(false) }
     LaunchedEffect(message.id) { appeared = true }
     val alpha by androidx.compose.animation.core.animateFloatAsState(
         targetValue = if (appeared) 1f else 0f,
-        animationSpec = androidx.compose.animation.core.tween(BitchatMotion.EMPHASIZED_MS),
+        animationSpec = androidx.compose.animation.core.tween(YarikMotion.EMPHASIZED_MS),
         label = "msgAlpha"
     )
     val offset by androidx.compose.animation.core.animateDpAsState(
         targetValue = if (appeared) 0.dp else 6.dp,
-        animationSpec = androidx.compose.animation.core.tween(BitchatMotion.EMPHASIZED_MS),
+        animationSpec = androidx.compose.animation.core.tween(YarikMotion.EMPHASIZED_MS),
         label = "msgOffset"
     )
 

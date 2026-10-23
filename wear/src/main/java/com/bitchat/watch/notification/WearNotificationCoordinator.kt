@@ -32,7 +32,7 @@ class WearNotificationCoordinator private constructor(context: Context) {
         const val EXTRA_OPEN_DM = "com.bitchat.watch.extra.OPEN_DM"
         const val EXTRA_PEER_ID = "com.bitchat.watch.extra.PEER_ID"
 
-        private const val MESSAGE_CHANNEL_ID = "bitchat_watch_messages"
+        private const val MESSAGE_CHANNEL_ID = "yarik_watch_messages"
         private const val CONVERSATION_NOTIFICATION_ID_BASE = 10_000
 
         @Volatile

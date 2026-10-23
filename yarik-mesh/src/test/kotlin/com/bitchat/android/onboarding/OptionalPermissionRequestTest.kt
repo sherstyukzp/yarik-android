@@ -21,7 +21,7 @@ class OptionalPermissionRequestTest {
     @Before
     fun setUp() {
         application = ApplicationProvider.getApplicationContext()
-        application.getSharedPreferences("bitchat_permissions", Context.MODE_PRIVATE)
+        application.getSharedPreferences("yarik_permissions", Context.MODE_PRIVATE)
             .edit()
             .clear()
             .commit()

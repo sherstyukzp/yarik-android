@@ -104,7 +104,7 @@ class NostrDirectMessageHandlerTest {
 
         val first = privateMessageGiftWrap(
             content = requireNotNull(
-                NostrEmbeddedBitChat.encodePMForNostrNoRecipient(
+                NostrEmbeddedYarik.encodePMForNostrNoRecipient(
                     content = "first",
                     messageID = firstId,
                     senderPeerID = "0011223344556677"
@@ -117,7 +117,7 @@ class NostrDirectMessageHandlerTest {
         )
         val second = privateMessageGiftWrap(
             content = requireNotNull(
-                NostrEmbeddedBitChat.encodePMForNostrNoRecipient(
+                NostrEmbeddedYarik.encodePMForNostrNoRecipient(
                     content = "second",
                     messageID = secondId,
                     senderPeerID = "0011223344556677"

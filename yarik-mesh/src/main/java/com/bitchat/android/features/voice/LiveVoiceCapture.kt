@@ -142,9 +142,9 @@ internal class LiveVoiceCapture(
             audioRecord = record
             startedAtMs = System.currentTimeMillis()
             senderRunning.set(true)
-            senderThread = Thread(::senderLoop, "bitchat-ptt-sender").also(Thread::start)
+            senderThread = Thread(::senderLoop, "Yarik-ptt-sender").also(Thread::start)
             running.set(true)
-            captureThread = Thread(::captureLoop, "bitchat-ptt-capture").also(Thread::start)
+            captureThread = Thread(::captureLoop, "Yarik-ptt-capture").also(Thread::start)
             file
         } catch (error: Exception) {
             Log.w(TAG, "Live capture unavailable; caller will fall back to a voice note: ${error.message}")

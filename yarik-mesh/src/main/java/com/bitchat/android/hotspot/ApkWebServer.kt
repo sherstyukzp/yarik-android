@@ -43,7 +43,7 @@ class ApkWebServer(
         Log.d(TAG, "Request: ${session.method} $uri from ${session.remoteIpAddress}")
 
         return when {
-            uri == "/yarik.apk" || uri == "/bitchat.apk" -> {
+            uri == "/yarik.apk" -> {
                 serveApk()
             }
             uri == "/favicon.ico" -> {
@@ -116,7 +116,7 @@ class ApkWebServer(
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Download BitChat</title>
+    <title>Download Yarik</title>
     <style>
         * {
             margin: 0;

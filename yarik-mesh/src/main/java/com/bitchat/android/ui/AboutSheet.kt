@@ -65,11 +65,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.bitchat.android.ui.theme.BitchatFontFamily
+import com.bitchat.android.ui.theme.YarikFontFamily
 import com.bitchat.android.R
 import com.bitchat.android.core.ui.component.button.CloseButton
 import com.bitchat.android.core.ui.component.sheet.LocalSheetDismiss
-import com.bitchat.android.core.ui.component.sheet.BitchatBottomSheet
+import com.bitchat.android.core.ui.component.sheet.YarikBottomSheet
 import com.bitchat.android.util.downloadPhaseLabel
 import com.bitchat.android.hotspot.HotspotActivity
 import com.bitchat.android.net.ArtiTorManager
@@ -77,8 +77,8 @@ import com.bitchat.android.net.TorMode
 import com.bitchat.android.net.TorPreferenceManager
 import com.bitchat.android.nostr.NostrProofOfWork
 import com.bitchat.android.nostr.PoWPreferenceManager
-import com.bitchat.android.ui.theme.BitchatMotion
-import com.bitchat.android.ui.theme.LocalBitchatPalette
+import com.bitchat.android.ui.theme.YarikMotion
+import com.bitchat.android.ui.theme.LocalYarikPalette
 import com.bitchat.android.util.ShareableApkVariant
 import com.bitchat.android.util.UniversalApkManager
 
@@ -98,12 +98,12 @@ private fun ThemeChip(
     // recolouring plus the whole app recolouring underneath it).
     val containerColor by animateColorAsState(
         targetValue = if (selected) colorScheme.primary else colorScheme.surfaceVariant,
-        animationSpec = tween(BitchatMotion.STANDARD_MS, easing = FastOutSlowInEasing),
+        animationSpec = tween(YarikMotion.STANDARD_MS, easing = FastOutSlowInEasing),
         label = "themeChipContainer"
     )
     val labelColor by animateColorAsState(
         targetValue = if (selected) Color.White else colorScheme.onSurfaceVariant,
-        animationSpec = tween(BitchatMotion.STANDARD_MS, easing = FastOutSlowInEasing),
+        animationSpec = tween(YarikMotion.STANDARD_MS, easing = FastOutSlowInEasing),
         label = "themeChipLabel"
     )
 
@@ -121,7 +121,7 @@ private fun ThemeChip(
         ) {
             Text(
                 text = label,
-                fontFamily = BitchatFontFamily,
+                fontFamily = YarikFontFamily,
                 fontSize = 13.sp,
                 fontWeight = if (selected) FontWeight.SemiBold else FontWeight.Normal,
                 color = labelColor
@@ -208,24 +208,24 @@ private fun SettingsToggleRow(
     statusIndicator: (@Composable () -> Unit)? = null
 ) {
     val colorScheme = MaterialTheme.colorScheme
-    val palette = LocalBitchatPalette.current
+    val palette = LocalYarikPalette.current
     val interactionSource = remember { MutableInteractionSource() }
 
     // Colours cross-fade so a row becoming available (Tor finishing bootstrap) eases in rather
     // than popping.
     val iconTint by animateColorAsState(
         targetValue = if (enabled) colorScheme.primary else palette.textTertiary,
-        animationSpec = tween(BitchatMotion.STANDARD_MS, easing = FastOutSlowInEasing),
+        animationSpec = tween(YarikMotion.STANDARD_MS, easing = FastOutSlowInEasing),
         label = "settingsRowIcon"
     )
     val titleColor by animateColorAsState(
         targetValue = if (enabled) colorScheme.onSurface else palette.textTertiary,
-        animationSpec = tween(BitchatMotion.STANDARD_MS, easing = FastOutSlowInEasing),
+        animationSpec = tween(YarikMotion.STANDARD_MS, easing = FastOutSlowInEasing),
         label = "settingsRowTitle"
     )
     val subtitleColor by animateColorAsState(
         targetValue = if (enabled) colorScheme.onSurfaceVariant else palette.textTertiary,
-        animationSpec = tween(BitchatMotion.STANDARD_MS, easing = FastOutSlowInEasing),
+        animationSpec = tween(YarikMotion.STANDARD_MS, easing = FastOutSlowInEasing),
         label = "settingsRowSubtitle"
     )
 
@@ -261,7 +261,7 @@ private fun SettingsToggleRow(
             ) {
                 Text(
                     text = title,
-                    fontFamily = BitchatFontFamily,
+                    fontFamily = YarikFontFamily,
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Medium,
                     color = titleColor
@@ -270,7 +270,7 @@ private fun SettingsToggleRow(
             }
             Text(
                 text = subtitle,
-                fontFamily = BitchatFontFamily,
+                fontFamily = YarikFontFamily,
                 fontSize = 12.sp,
                 color = subtitleColor,
                 lineHeight = 17.sp
@@ -325,12 +325,12 @@ fun AboutSheet(
     }
     val topBarAlpha by animateFloatAsState(
         targetValue = if (isScrolled) 0.98f else 0f,
-        animationSpec = tween(BitchatMotion.EMPHASIZED_MS, easing = FastOutSlowInEasing),
+        animationSpec = tween(YarikMotion.EMPHASIZED_MS, easing = FastOutSlowInEasing),
         label = "topBarAlpha"
     )
 
     val colorScheme = MaterialTheme.colorScheme
-    val palette = LocalBitchatPalette.current
+    val palette = LocalYarikPalette.current
     var selectedTab by remember { mutableStateOf(AboutTab.Info) }
     val supportedLanguages = remember(context) {
         LanguagePreferenceManager.supportedLanguages(context)
@@ -341,7 +341,7 @@ fun AboutSheet(
     var showLanguagePicker by remember { mutableStateOf(false) }
 
     if (isPresented) {
-        BitchatBottomSheet(
+        YarikBottomSheet(
             modifier = modifier,
             onDismissRequest = onDismiss,
         ) {
@@ -1088,7 +1088,7 @@ fun AboutSheet(
                                 Text(
                                     text = stringResource(R.string.tor_not_available_in_this_build),
                                     fontSize = 12.sp,
-                                    fontFamily = BitchatFontFamily,
+                                    fontFamily = YarikFontFamily,
                                     color = palette.textTertiary,
                                     modifier = Modifier.padding(
                                         start = AboutHorizontalPadding + 16.dp,
@@ -1124,7 +1124,7 @@ fun AboutSheet(
                                         ) {
                                             Text(
                                                 text = stringResource(R.string.about_difficulty),
-                                                fontFamily = BitchatFontFamily,
+                                                fontFamily = YarikFontFamily,
                                                 fontSize = 14.sp,
                                                 fontWeight = FontWeight.Medium,
                                                 color = colorScheme.onSurface
@@ -1136,7 +1136,7 @@ fun AboutSheet(
                                                     powDifficulty,
                                                     NostrProofOfWork.estimateMiningTime(powDifficulty)
                                                 ),
-                                                fontFamily = BitchatFontFamily,
+                                                fontFamily = YarikFontFamily,
                                                 fontSize = 12.sp,
                                                 color = colorScheme.onSurfaceVariant
                                             )
@@ -1166,7 +1166,7 @@ fun AboutSheet(
                                                 else -> stringResource(R.string.about_pow_desc_extreme)
                                             },
                                             fontSize = 12.sp,
-                                            fontFamily = BitchatFontFamily,
+                                            fontFamily = YarikFontFamily,
                                             color = palette.textTertiary
                                         )
                                     }
@@ -1210,7 +1210,7 @@ fun AboutSheet(
                                                 } else {
                                                     stringResource(R.string.about_tor_disconnected)
                                                 },
-                                                fontFamily = BitchatFontFamily,
+                                                fontFamily = YarikFontFamily,
                                                 fontSize = 14.sp,
                                                 fontWeight = FontWeight.Medium,
                                                 color = colorScheme.onSurface
@@ -1220,7 +1220,7 @@ fun AboutSheet(
                                             Text(
                                                 text = torStatus.lastLogLine.take(120),
                                                 fontSize = 11.sp,
-                                                fontFamily = BitchatFontFamily,
+                                                fontFamily = YarikFontFamily,
                                                 color = palette.textTertiary,
                                                 maxLines = 2
                                             )
@@ -1251,7 +1251,7 @@ fun AboutSheet(
                                     Text(
                                         text = stringResource(R.string.about_debug_settings),
                                         fontSize = 13.sp,
-                                        fontFamily = BitchatFontFamily,
+                                        fontFamily = YarikFontFamily,
                                         color = colorScheme.primary
                                     )
                                 }
@@ -1259,7 +1259,7 @@ fun AboutSheet(
                             Text(
                                 text = stringResource(R.string.about_footer),
                                 fontSize = 11.sp,
-                                fontFamily = BitchatFontFamily,
+                                fontFamily = YarikFontFamily,
                                 color = palette.textTertiary
                             )
                             Spacer(modifier = Modifier.height(20.dp))
@@ -1327,7 +1327,7 @@ fun PasswordPromptDialog(
                         onValueChange = onPasswordChange,
                         label = { Text(stringResource(R.string.pwd_label), style = MaterialTheme.typography.bodyMedium) },
                         textStyle = MaterialTheme.typography.bodyMedium.copy(
-                            fontFamily = BitchatFontFamily
+                            fontFamily = YarikFontFamily
                         ),
                         colors = OutlinedTextFieldDefaults.colors(
                             focusedBorderColor = colorScheme.primary,

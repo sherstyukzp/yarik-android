@@ -9,18 +9,18 @@ RELEASE_DIR="${1:?usage: sign-release.sh RELEASE_DIR}"
 # shellcheck disable=SC1091
 source "$SCRIPT_DIR/TOOLCHAIN.env"
 
-: "${BITCHAT_GITHUB_KEYSTORE:?BITCHAT_GITHUB_KEYSTORE is required}"
-: "${BITCHAT_GITHUB_KEY_ALIAS:?BITCHAT_GITHUB_KEY_ALIAS is required}"
-: "${BITCHAT_GITHUB_KEYSTORE_PASSWORD:?BITCHAT_GITHUB_KEYSTORE_PASSWORD is required}"
-: "${BITCHAT_GITHUB_KEY_PASSWORD:?BITCHAT_GITHUB_KEY_PASSWORD is required}"
+: "${YARIK_GITHUB_KEYSTORE:?YARIK_GITHUB_KEYSTORE is required}"
+: "${YARIK_GITHUB_KEY_ALIAS:?YARIK_GITHUB_KEY_ALIAS is required}"
+: "${YARIK_GITHUB_KEYSTORE_PASSWORD:?YARIK_GITHUB_KEYSTORE_PASSWORD is required}"
+: "${YARIK_GITHUB_KEY_PASSWORD:?YARIK_GITHUB_KEY_PASSWORD is required}"
 
-if [ ! -f "$BITCHAT_GITHUB_KEYSTORE" ]; then
+if [ ! -f "$YARIK_GITHUB_KEYSTORE" ]; then
   echo "error: GitHub release keystore not found" >&2
   exit 1
 fi
 KEYSTORE="$(
-  cd "$(dirname "$BITCHAT_GITHUB_KEYSTORE")"
-  printf '%s/%s\n' "$PWD" "$(basename "$BITCHAT_GITHUB_KEYSTORE")"
+  cd "$(dirname "$YARIK_GITHUB_KEYSTORE")"
+  printf '%s/%s\n' "$PWD" "$(basename "$YARIK_GITHUB_KEYSTORE")"
 )"
 
 ANDROID_SDK_HOME="${ANDROID_SDK_ROOT:-${ANDROID_HOME:-}}"
@@ -51,7 +51,7 @@ fi
 )
 
 EXPECTED_CERT_SHA256="$(
-  sed -n 's/^BITCHAT_GITHUB_RELEASE_CERT_SHA256=//p' "$PROJECT_ROOT/gradle.properties" |
+  sed -n 's/^YARIK_GITHUB_RELEASE_CERT_SHA256=//p' "$PROJECT_ROOT/gradle.properties" |
     tr -d ':\r[:space:]' |
     tr '[:upper:]' '[:lower:]'
 )"
@@ -62,20 +62,20 @@ fi
 
 TEMP_DIR="$(mktemp -d)"
 trap 'rm -rf "$TEMP_DIR"' EXIT
-export BITCHAT_GITHUB_KEYSTORE_PASSWORD
-export BITCHAT_GITHUB_KEY_PASSWORD
+export YARIK_GITHUB_KEYSTORE_PASSWORD
+export YARIK_GITHUB_KEY_PASSWORD
 
 unsigned_names=(
-  "bitchat-android-arm64-unsigned.apk"
-  "bitchat-android-universal-unsigned.apk"
-  "bitchat-android-wear-unsigned.apk"
-  "bitchat-android-x86_64-unsigned.apk"
+  "yarik-android-arm64-unsigned.apk"
+  "yarik-android-universal-unsigned.apk"
+  "yarik-android-wear-unsigned.apk"
+  "yarik-android-x86_64-unsigned.apk"
 )
 signed_names=(
-  "bitchat-android-arm64.apk"
-  "bitchat-android-universal.apk"
-  "bitchat-android-wear.apk"
-  "bitchat-android-x86_64.apk"
+  "yarik-android-arm64.apk"
+  "yarik-android-universal.apk"
+  "yarik-android-wear.apk"
+  "yarik-android-x86_64.apk"
 )
 
 for ((index = 0; index < ${#unsigned_names[@]}; index++)); do
@@ -95,9 +95,9 @@ for ((index = 0; index < ${#unsigned_names[@]}; index++)); do
   for output_apk in "$first_signed" "$second_signed"; do
     "$APKSIGNER" sign \
       --ks "$KEYSTORE" \
-      --ks-key-alias "$BITCHAT_GITHUB_KEY_ALIAS" \
-      --ks-pass env:BITCHAT_GITHUB_KEYSTORE_PASSWORD \
-      --key-pass env:BITCHAT_GITHUB_KEY_PASSWORD \
+      --ks-key-alias "$YARIK_GITHUB_KEY_ALIAS" \
+      --ks-pass env:YARIK_GITHUB_KEYSTORE_PASSWORD \
+      --key-pass env:YARIK_GITHUB_KEY_PASSWORD \
       --deterministic-dsa-signing true \
       --min-sdk-version 26 \
       --v1-signing-enabled false \

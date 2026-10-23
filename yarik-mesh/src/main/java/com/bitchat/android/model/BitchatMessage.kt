@@ -73,7 +73,7 @@ data class BitchatMessage(
     /**
      * Full canonical Nostr public key supplied by the local Nostr bridge.
      *
-     * This is local identity metadata, not part of the Bitchat binary wire format. It lets UI
+     * This is local identity metadata, not part of the Yarik binary wire format. It lets UI
      * surfaces color the sender by the same stable key while [senderPeerID] remains available for
      * mesh IDs and private-chat routing aliases.
      */

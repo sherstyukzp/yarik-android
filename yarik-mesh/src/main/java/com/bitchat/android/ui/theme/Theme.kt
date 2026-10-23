@@ -20,9 +20,9 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 
-// Standard UI semantics live in Material so stock components and custom Bitchat composables
-// share one source of truth. LocalBitchatPalette below only supplies app-specific extra colors.
-internal val DarkBitchatColorScheme = darkColorScheme(
+// Standard UI semantics live in Material so stock components and custom Yarik composables
+// share one source of truth. LocalYarikPalette below only supplies app-specific extra colors.
+internal val DarkYarikColorScheme = darkColorScheme(
     primary = Color(0xFF8AB4F8),
     onPrimary = Color(0xFF062E6F),
     primaryContainer = Color(0xFF1A4B99),
@@ -31,7 +31,7 @@ internal val DarkBitchatColorScheme = darkColorScheme(
     onSecondary = Color(0xFF0B1F3A),
     secondaryContainer = Color(0xFF1B334F),
     onSecondaryContainer = Color(0xFFD2E3FC),
-    tertiary = DarkBitchatPalette.accentOrange,
+    tertiary = DarkYarikPalette.accentOrange,
     onTertiary = Color.Black,
     background = Color(0xFF0B0C10),
     onBackground = Color(0xFFE8EAED),
@@ -45,7 +45,7 @@ internal val DarkBitchatColorScheme = darkColorScheme(
     onError = Color(0xFF410E0B)
 )
 
-internal val LightBitchatColorScheme = lightColorScheme(
+internal val LightYarikColorScheme = lightColorScheme(
     primary = Color(0xFF1A73E8),
     onPrimary = Color.White,
     primaryContainer = Color(0xFFD2E3FC),
@@ -54,7 +54,7 @@ internal val LightBitchatColorScheme = lightColorScheme(
     onSecondary = Color.White,
     secondaryContainer = Color(0xFFE8F0FE),
     onSecondaryContainer = Color(0xFF041E49),
-    tertiary = LightBitchatPalette.accentOrange,
+    tertiary = LightYarikPalette.accentOrange,
     onTertiary = Color.Black,
     background = Color(0xFFFFFFFF),
     onBackground = Color(0xFF202124),
@@ -69,7 +69,7 @@ internal val LightBitchatColorScheme = lightColorScheme(
 )
 
 @Composable
-fun BitchatTheme(
+fun YarikTheme(
     darkTheme: Boolean? = null,
     content: @Composable () -> Unit
 ) {
@@ -90,10 +90,10 @@ fun BitchatTheme(
         Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
             if (shouldUseDark) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
         }
-        shouldUseDark -> DarkBitchatColorScheme
-        else -> LightBitchatColorScheme
+        shouldUseDark -> DarkYarikColorScheme
+        else -> LightYarikColorScheme
     }
-    val palette = if (shouldUseDark) DarkBitchatPalette else LightBitchatPalette
+    val palette = if (shouldUseDark) DarkYarikPalette else LightYarikPalette
 
     val view = LocalView.current
     SideEffect {
@@ -116,7 +116,7 @@ fun BitchatTheme(
         }
     }
 
-    CompositionLocalProvider(LocalBitchatPalette provides palette) {
+    CompositionLocalProvider(LocalYarikPalette provides palette) {
         MaterialTheme(
             colorScheme = colorScheme,
             typography = Typography,

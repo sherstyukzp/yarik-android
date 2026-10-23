@@ -28,7 +28,7 @@ import kotlinx.coroutines.launch
 class MeshForegroundService : Service() {
 
     companion object {
-        private const val CHANNEL_ID = "bitchat_mesh_service"
+        private const val CHANNEL_ID = "yarik_mesh_service"
         private const val NOTIFICATION_ID = 10001
 
         const val ACTION_START = "com.bitchat.android.service.START"
@@ -316,7 +316,7 @@ class MeshForegroundService : Service() {
             // Add an action button that appears when notification is expanded
             .addAction(
                 android.R.drawable.ic_menu_close_clear_cancel,
-                getString(R.string.notification_action_quit_bitchat),
+                getString(R.string.notification_action_quit_yarik),
                 quitPendingIntent
             )
             .build()

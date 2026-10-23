@@ -24,7 +24,7 @@ import androidx.core.content.edit
  * Encryption service that now uses NoiseEncryptionService internally
  * Maintains the same public API for backward compatibility
  * 
- * This is the main interface for all encryption/decryption operations in bitchat.
+ * This is the main interface for all encryption/decryption operations in Yarik.
  * It now uses the Noise protocol for secure transport encryption with proper session management.
  */
 open class EncryptionService(private val context: Context) {
@@ -32,8 +32,8 @@ open class EncryptionService(private val context: Context) {
     companion object {
         private const val TAG = "EncryptionService"
         private const val ED25519_PRIVATE_KEY_PREF = "ed25519_signing_private_key"
-        private const val OLD_PREFS_NAME = "bitchat_crypto"
-        private const val SECURE_PREFS_NAME = "bitchat_crypto_secure"
+        private const val OLD_PREFS_NAME = "Yarik_crypto"
+        private const val SECURE_PREFS_NAME = "Yarik_crypto_secure"
     }
     
     // Core Noise encryption service
