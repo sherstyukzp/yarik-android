@@ -1,6 +1,6 @@
-# Upstream integration (Bitchat Android)
+# Upstream mesh stack (Android)
 
-Yarik Android ships the full [permissionlesstech/bitchat-android](https://github.com/permissionlesstech/bitchat-android) tree at the repository root.
+Yarik Android vendors the full [permissionlesstech/bitchat-android](https://github.com/permissionlesstech/bitchat-android) tree at the repository root. Protocol wire format and Kotlin packages stay aligned with upstream for mesh interoperability.
 
 ## Pinned upstream commit
 
@@ -15,29 +15,28 @@ Yarik Android ships the full [permissionlesstech/bitchat-android](https://github
 
 **Root vendor copy with documented SHA + git remote for sync** (not a submodule).
 
-- Remote name: `bitchat-android` → upstream URL above.
-- Initial import: checked out upstream `main` at the pinned SHA onto branch `cursor/integrate-bitchat-909b`, replacing the empty Yarik Compose starter.
-- Rationale: upstream is a single Gradle multi-module app (`:app`, `:wear`); a submodule would complicate CI and local paths; subtree at root is equivalent to this import for a greenfield Yarik repo.
+- Remote name: `mesh-upstream-android` → upstream URL above (rename locally if you still have legacy `bitchat-android` remote).
+- Initial import: checked out upstream `main` at the pinned SHA onto `develop`, replacing the empty Compose starter on `main`.
+- Rationale: upstream is a multi-module Gradle app (`:app`, `:wear`); submodule paths would complicate CI.
 
 ### Syncing newer upstream
 
 ```bash
-git fetch bitchat-android main
-# Review diff, then merge (resolve conflicts in branding/docs only if we diverge):
-git merge bitchat-android/main -m "chore: sync bitchat-android upstream"
+git fetch mesh-upstream-android main
+git merge mesh-upstream-android/main -m "chore: sync mesh-upstream-android"
 ```
 
 After merge, update the commit hash in this file.
 
-## Branding (MVP)
+## Yarik vs upstream identifiers
 
-| Setting | Value | Notes |
-|---------|--------|--------|
-| `applicationId` | `com.bitchat.droid` | **Unchanged** for MVP — matches official Play/protocol peers, zero Gradle churn. |
-| `namespace` | `com.bitchat.android` | Upstream package layout. |
-| Display name | Upstream strings | Custom Yarik UI deferred; transport proof uses upstream IRC-style UI. |
+| Setting | Yarik value | Notes |
+|---------|-------------|--------|
+| `applicationId` | `com.yarik.android` | Yarik install identity; protocol unchanged |
+| `namespace` | `com.bitchat.android` | Upstream package layout (kept for mesh code) |
+| Display name | Yarik (`app_name` strings) | User-facing branding |
 
-Future rebrand: change `applicationId` to `com.yarik.*` only when signing keys and side-by-side install with official Bitchat are required.
+Deep links and Wi‑Fi Aware service identifiers that use the `bitchat` scheme/name are **protocol constants** and remain unchanged for peer compatibility.
 
 ## First mesh message (manual test)
 
@@ -50,6 +49,6 @@ Two physical Android devices (BLE cannot be emulated reliably):
 5. Stay on default **`#bluetooth`** public mesh channel (IRC-style input at bottom).
 6. On device A, type a message and send. Confirm it appears on device B (and vice versa).
 
-**Mesh Lab (official):** Upstream documents a mesh testing skill under `.agents/skills/mesh-lab/` for controlled multi-device scenarios; use when available in your environment.
+**Mesh Lab:** Upstream documents mesh testing under `.agents/skills/mesh-lab/` for controlled multi-device scenarios.
 
 Single-device smoke: `./gradlew :app:assembleDebug` and launch — UI loads; mesh send/receive requires a second peer.

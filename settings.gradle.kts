@@ -13,7 +13,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "bitchat-android"
+rootProject.name = "yarik-android"
 include(":app")
 include(":wear")
 // Using published Arti AAR; local module not included

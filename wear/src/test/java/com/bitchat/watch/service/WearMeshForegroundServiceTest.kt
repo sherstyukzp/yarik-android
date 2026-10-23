@@ -35,7 +35,7 @@ class WearMeshForegroundServiceTest {
         // Keep shared phone tests independent of Wear's minSdk/manifest/resources.
         val resources = spy(service.resources)
         doReturn(resources).`when`(service).resources
-        doReturn("Bitchat").`when`(resources).getString(R.string.app_name)
+        doReturn("Yarik").`when`(resources).getString(R.string.app_name)
         doReturn("Mesh running").`when`(resources).getString(R.string.mesh_notification_no_peers)
         for (count in listOf(1, 3)) {
             doReturn("$count peers").`when`(resources)
