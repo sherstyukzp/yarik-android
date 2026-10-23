@@ -66,21 +66,21 @@ internal object ChatVisualTokens {
     const val MutedTextAlpha: Float = 0.50f
 
     val MessageBodyStyle = TextStyle(
-        fontFamily = BitchatFontFamily,
+        fontFamily = FontFamily.SansSerif,
         fontWeight = FontWeight.Normal,
         fontSize = MessageBodyFontSize,
         lineHeight = MessageBodyLineHeight,
     )
 
     val SenderStyle = TextStyle(
-        fontFamily = BitchatFontFamily,
+        fontFamily = FontFamily.SansSerif,
         fontWeight = FontWeight.SemiBold,
         fontSize = SenderFontSize,
         lineHeight = SenderLineHeight,
     )
 
     val SystemActionStyle = TextStyle(
-        fontFamily = BitchatFontFamily,
+        fontFamily = FontFamily.SansSerif,
         fontWeight = FontWeight.Medium,
         fontSize = SystemActionFontSize,
         lineHeight = SystemActionLineHeight,

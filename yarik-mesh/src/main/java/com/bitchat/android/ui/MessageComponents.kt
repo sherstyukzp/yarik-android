@@ -905,12 +905,15 @@ private fun BubbleTextMessageLayout(
     modifier: Modifier = Modifier,
 ) {
     val palette = LocalBitchatPalette.current
+    val colorScheme = MaterialTheme.colorScheme
     val haptic = LocalHapticFeedback.current
     val context = LocalContext.current
 
     val authorColor = remember(message, isSelf, palette) {
         if (isSelf) palette.accentOrange else colorForPeer(peerIdentityForMessage(message), palette)
     }
+    val bubbleColor = if (isSelf) colorScheme.primaryContainer else colorScheme.surfaceContainerHigh
+    val bubbleContentColor = if (isSelf) colorScheme.onPrimaryContainer else colorScheme.onSurface
 
     val corner = ChatVisualTokens.BubbleCornerRadius
     val tail = ChatVisualTokens.BubbleTailRadius
@@ -962,13 +965,8 @@ private fun BubbleTextMessageLayout(
                 modifier = Modifier
                     .align(if (isSelf) Alignment.CenterEnd else Alignment.CenterStart)
                     .widthIn(max = maxBubbleWidth)
-                    .border(
-                        width = 1.dp,
-                        color = authorColor.copy(alpha = ChatVisualTokens.BubbleBorderAlpha),
-                        shape = bubbleShape
-                    )
                     .background(
-                        color = authorColor.copy(alpha = ChatVisualTokens.BubbleBackgroundAlpha),
+                        color = bubbleColor,
                         shape = bubbleShape
                     )
                     .padding(

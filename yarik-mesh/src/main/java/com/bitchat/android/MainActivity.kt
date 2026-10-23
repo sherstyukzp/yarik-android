@@ -39,7 +39,7 @@ import com.bitchat.android.onboarding.OnboardingCoordinator
 import com.bitchat.android.onboarding.OnboardingState
 import com.bitchat.android.onboarding.PermissionExplanationScreen
 import com.bitchat.android.onboarding.PermissionManager
-import com.bitchat.android.ui.ChatScreen
+import com.bitchat.android.ui.YarikMessenger
 import com.bitchat.android.ui.ChatViewModel
 import com.bitchat.android.ui.OrientationAwareActivity
 import com.bitchat.android.ui.theme.BitchatTheme
@@ -330,7 +330,7 @@ class MainActivity : OrientationAwareActivity() {
 
                 // Add the callback - this will be automatically removed when the activity is destroyed
                 onBackPressedDispatcher.addCallback(this, backCallback)
-                ChatScreen(viewModel = chatViewModel)
+                YarikMessenger(viewModel = chatViewModel)
             }
             
             OnboardingState.ERROR -> {
@@ -850,7 +850,7 @@ class MainActivity : OrientationAwareActivity() {
 
     private fun handleVerificationIntent(intent: Intent) {
         val uri = intent.data ?: return
-        if (uri.scheme != "bitchat" || uri.host != "verify") return
+        if (uri.scheme !in setOf("yarik", "bitchat") || uri.host != "verify") return
 
         chatViewModel.showVerificationSheet()
         val qr = VerificationService.verifyScannedQR(uri.toString())

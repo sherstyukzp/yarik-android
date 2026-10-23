@@ -8,7 +8,11 @@ import com.bitchat.android.ui.theme.BitchatFontFamily
 
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowDownward
+import androidx.compose.material.icons.filled.LocationOn
+import androidx.compose.material.icons.filled.People
+import androidx.compose.material.icons.filled.PushPin
 import androidx.compose.animation.*
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.tween
@@ -59,7 +63,11 @@ import com.bitchat.android.ui.theme.BitchatMotion
  * - ChatUIUtils: Utility functions for formatting and colors
  */
 @Composable
-fun ChatScreen(viewModel: ChatViewModel) {
+fun ChatScreen(
+    viewModel: ChatViewModel,
+    onNavigateBack: (() -> Unit)? = null,
+    includeGlobalSheets: Boolean = true,
+) {
     val colorScheme = MaterialTheme.colorScheme
     val messages by viewModel.messages.collectAsStateWithLifecycle()
     val connectedPeers by viewModel.connectedPeers.collectAsStateWithLifecycle()
@@ -263,7 +271,7 @@ fun ChatScreen(viewModel: ChatViewModel) {
             .fillMaxSize()
             .background(colorScheme.background) // Extend background to fill entire screen including status bar
     ) {
-        val headerHeight = ChatHeaderHeight
+        val headerHeight = 64.dp
         val statusBarHeight = WindowInsets.statusBars.asPaddingValues().calculateTopPadding()
 
         // Both bars are translucent and the conversation scrolls underneath them, so their
@@ -449,21 +457,19 @@ fun ChatScreen(viewModel: ChatViewModel) {
           }
         }
 
-        // Floating header - positioned absolutely at top, ignores keyboard
-        ChatFloatingHeader(
-            selectedPrivatePeer = null,
-            currentChannel = currentChannel,
-            nickname = nickname,
+        ChatThreadTopBar(
             viewModel = viewModel,
-            colorScheme = colorScheme,
-            onSidebarToggle = { viewModel.showMeshPeerList() },
-            onShowAppInfo = { viewModel.showAppInfo() },
-            onPanicClear = { viewModel.panicClearAllData() },
+            currentChannel = currentChannel,
+            selectedLocationChannel = selectedLocationChannel,
+            connectedPeerCount = connectedPeers.size,
+            geohashPeopleCount = geohashPeople.size,
+            onNavigateBack = onNavigateBack,
+            onPeopleClick = { viewModel.showMeshPeerList() },
             onLocationChannelsClick = { showLocationChannelsSheet = true },
             onLocationNotesClick = {
                 nearbyNotesController.reveal()
                 showLocationNotesSheet = true
-            }
+            },
         )
 
         // Scroll-to-bottom floating button
@@ -557,9 +563,10 @@ fun ChatScreen(viewModel: ChatViewModel) {
         onSecurityVerificationSheetDismiss = viewModel::hideSecurityVerificationSheet,
         showMeshPeerListSheet = showMeshPeerListSheet,
         onMeshPeerListDismiss = viewModel::hideMeshPeerList,
+        includeGlobalSheets = includeGlobalSheets,
     )
 
-    legacyPrivateMediaConsent?.let { request ->
+    if (includeGlobalSheets) legacyPrivateMediaConsent?.let { request ->
         AlertDialog(
             onDismissRequest = { viewModel.cancelLegacyPrivateMedia(request.requestId) },
             title = { Text(stringResource(com.bitchat.android.R.string.private_media_legacy_title)) },
@@ -751,65 +758,97 @@ private const val BarBackgroundAlpha = 0.88f
  * like part of the app. Everything below that stop matches the composer's flat translucency.
  */
 private const val HeaderOpaqueStop = 0.72f
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun ChatFloatingHeader(
-    selectedPrivatePeer: String?,
-    currentChannel: String?,
-    nickname: String,
+private fun ChatThreadTopBar(
     viewModel: ChatViewModel,
-    colorScheme: ColorScheme,
-    onSidebarToggle: () -> Unit,
-    onShowAppInfo: () -> Unit,
-    onPanicClear: () -> Unit,
+    currentChannel: String?,
+    selectedLocationChannel: ChannelID?,
+    connectedPeerCount: Int,
+    geohashPeopleCount: Int,
+    onNavigateBack: (() -> Unit)?,
+    onPeopleClick: () -> Unit,
     onLocationChannelsClick: () -> Unit,
-    onLocationNotesClick: () -> Unit
+    onLocationNotesClick: () -> Unit,
 ) {
-    val context = androidx.compose.ui.platform.LocalContext.current
-    val locationManager = remember { com.bitchat.android.geohash.LocationChannelManager.getInstance(context) }
+    val context = LocalContext.current
+    val locationManager = remember { LocationChannelManager.getInstance(context) }
+    val locationNames by locationManager.locationNames.collectAsStateWithLifecycle()
 
-    Box(
+    val title = when {
+        currentChannel != null -> currentChannel
+        selectedLocationChannel is ChannelID.Location -> {
+            locationNames[selectedLocationChannel.channel.level]
+                ?: selectedLocationChannel.channel.displayName
+        }
+        else -> stringResource(R.string.nearby_chat_title)
+    }
+    val subtitle = when {
+        currentChannel != null -> stringResource(R.string.channel_chat_subtitle)
+        selectedLocationChannel is ChannelID.Location -> {
+            stringResource(R.string.people_nearby_count, geohashPeopleCount)
+        }
+        else -> stringResource(R.string.people_nearby_count, connectedPeerCount)
+    }
+
+    TopAppBar(
         modifier = Modifier
             .fillMaxWidth()
             .zIndex(1f)
-            // Fully opaque where it meets the system status bar, fading to translucent at its
-            // lower edge. The status bar itself is transparent, so anything less than opaque at
-            // the top would let the wallpaper or a light system-bar scrim bleed through and the
-            // header would stop reading as part of the app.
-            .background(
-                Brush.verticalGradient(
-                    0f to colorScheme.background,
-                    HeaderOpaqueStop to colorScheme.background,
-                    1f to colorScheme.background.copy(alpha = BarBackgroundAlpha)
+            .windowInsetsPadding(WindowInsets.statusBars),
+        windowInsets = WindowInsets(0, 0, 0, 0),
+        title = {
+            Column {
+                Text(
+                    text = title,
+                    style = MaterialTheme.typography.titleLarge,
+                    maxLines = 1,
                 )
-            )
-            .windowInsetsPadding(WindowInsets.statusBars) // Extend into status bar area
-    ) {
-        // No TopAppBar: it silently injects a 4.dp horizontal pad plus a 12.dp title inset and
-        // applies its own minimum heights, which made the header's spacing impossible to specify
-        // exactly. Height and edge insets belong to each header variant, so that a conversation
-        // header rendered here and one rendered in a sheet are laid out identically.
-        ChatHeaderContent(
-            selectedPrivatePeer = selectedPrivatePeer,
-            currentChannel = currentChannel,
-            nickname = nickname,
-            viewModel = viewModel,
-            onBackClick = {
-                when {
-                    selectedPrivatePeer != null -> viewModel.endPrivateChat()
-                    currentChannel != null -> viewModel.switchToChannel(null)
+                Text(
+                    text = subtitle,
+                    style = MaterialTheme.typography.labelMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    maxLines = 1,
+                )
+            }
+        },
+        navigationIcon = {
+            if (onNavigateBack != null) {
+                IconButton(onClick = onNavigateBack) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                        contentDescription = stringResource(R.string.back),
+                    )
                 }
-            },
-            onSidebarClick = onSidebarToggle,
-            onTripleClick = onPanicClear,
-            onShowAppInfo = onShowAppInfo,
-            onLocationChannelsClick = onLocationChannelsClick,
-            onLocationNotesClick = {
-                // Ensure location is loaded before showing sheet
+            }
+        },
+        actions = {
+            IconButton(onClick = {
                 locationManager.refreshChannels()
                 onLocationNotesClick()
+            }) {
+                Icon(
+                    imageVector = Icons.Filled.PushPin,
+                    contentDescription = stringResource(R.string.cd_location_notes),
+                )
             }
-        )
-    }
+            IconButton(onClick = onLocationChannelsClick) {
+                Icon(
+                    imageVector = Icons.Filled.LocationOn,
+                    contentDescription = stringResource(R.string.cd_open_location_channels),
+                )
+            }
+            IconButton(onClick = onPeopleClick) {
+                Icon(
+                    imageVector = Icons.Filled.People,
+                    contentDescription = stringResource(R.string.people),
+                )
+            }
+        },
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = MaterialTheme.colorScheme.surface,
+        ),
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -839,32 +878,33 @@ private fun ChatDialogs(
     onSecurityVerificationSheetDismiss: () -> Unit,
     showMeshPeerListSheet: Boolean,
     onMeshPeerListDismiss: () -> Unit,
+    includeGlobalSheets: Boolean,
 ) {
     val privateChatSheetPeer by viewModel.privateChatSheetPeer.collectAsStateWithLifecycle()
 
-    // Password dialog
-    PasswordPromptDialog(
-        show = showPasswordDialog,
-        channelName = passwordPromptChannel,
-        passwordInput = passwordInput,
-        onPasswordChange = onPasswordChange,
-        onConfirm = onPasswordConfirm,
-        onDismiss = onPasswordDismiss
-    )
-
-    // About sheet
     var showDebugSheet by remember { mutableStateOf(false) }
-    AboutSheet(
-        isPresented = showAppInfo,
-        onDismiss = onAppInfoDismiss,
-        onShowDebug = { showDebugSheet = true }
-    )
-    if (showDebugSheet) {
-        com.bitchat.android.ui.debug.DebugSettingsSheet(
-            isPresented = showDebugSheet,
-            onDismiss = { showDebugSheet = false },
-            meshService = viewModel.meshService
+    if (includeGlobalSheets) {
+        PasswordPromptDialog(
+            show = showPasswordDialog,
+            channelName = passwordPromptChannel,
+            passwordInput = passwordInput,
+            onPasswordChange = onPasswordChange,
+            onConfirm = onPasswordConfirm,
+            onDismiss = onPasswordDismiss
         )
+
+        AboutSheet(
+            isPresented = showAppInfo,
+            onDismiss = onAppInfoDismiss,
+            onShowDebug = { showDebugSheet = true }
+        )
+        if (showDebugSheet) {
+            com.bitchat.android.ui.debug.DebugSettingsSheet(
+                isPresented = showDebugSheet,
+                onDismiss = { showDebugSheet = false },
+                meshService = viewModel.meshService
+            )
+        }
     }
     
     // Location channels sheet
@@ -895,44 +935,45 @@ private fun ChatDialogs(
             viewModel = viewModel
         )
     }
-    // MeshPeerList sheet (network view)
-    if (showMeshPeerListSheet){
-        MeshPeerListSheet(
-            isPresented = showMeshPeerListSheet,
-            viewModel = viewModel,
-            onDismiss = onMeshPeerListDismiss,
-            onShowVerification = {
-                onMeshPeerListDismiss()
-                viewModel.showVerificationSheet(fromSidebar = true)
-            }
-        )
-    }
+    if (includeGlobalSheets) {
+        if (showMeshPeerListSheet) {
+            MeshPeerListSheet(
+                isPresented = showMeshPeerListSheet,
+                viewModel = viewModel,
+                onDismiss = onMeshPeerListDismiss,
+                onShowVerification = {
+                    onMeshPeerListDismiss()
+                    viewModel.showVerificationSheet(fromSidebar = true)
+                }
+            )
+        }
 
-    if (showVerificationSheet) {
-        VerificationSheet(
-            isPresented = showVerificationSheet,
-            onDismiss = onVerificationSheetDismiss,
-            viewModel = viewModel
-        )
-    }
+        if (showVerificationSheet) {
+            VerificationSheet(
+                isPresented = showVerificationSheet,
+                onDismiss = onVerificationSheetDismiss,
+                viewModel = viewModel
+            )
+        }
 
-    if (showSecurityVerificationSheet) {
-        SecurityVerificationSheet(
-            isPresented = showSecurityVerificationSheet,
-            onDismiss = onSecurityVerificationSheetDismiss,
-            viewModel = viewModel
-        )
-    }
+        if (showSecurityVerificationSheet) {
+            SecurityVerificationSheet(
+                isPresented = showSecurityVerificationSheet,
+                onDismiss = onSecurityVerificationSheetDismiss,
+                viewModel = viewModel
+            )
+        }
 
-    if (privateChatSheetPeer != null) {
-        PrivateChatSheet(
-            isPresented = true,
-            peerID = privateChatSheetPeer!!,
-            viewModel = viewModel,
-            onDismiss = {
-                viewModel.hidePrivateChatSheet()
-                viewModel.endPrivateChat()
-            }
-        )
+        if (privateChatSheetPeer != null) {
+            PrivateChatSheet(
+                isPresented = true,
+                peerID = privateChatSheetPeer!!,
+                viewModel = viewModel,
+                onDismiss = {
+                    viewModel.hidePrivateChatSheet()
+                    viewModel.endPrivateChat()
+                }
+            )
+        }
     }
 }

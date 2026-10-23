@@ -110,7 +110,7 @@ fun HotspotScreen(
             TopAppBar(
                 title = {
                     Text(
-                        text = "Share BitChat",
+                        text = stringResource(R.string.share_apk_title),
                         fontFamily = BitchatFontFamily
                     )
                 },

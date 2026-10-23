@@ -294,7 +294,7 @@ class MeshForegroundService : Service() {
             PendingIntent.FLAG_UPDATE_CURRENT or (if (Build.VERSION.SDK_INT >= 23) PendingIntent.FLAG_IMMUTABLE else 0)
         )
 
-        // Action: Quit Bitchat
+        // Action: Quit Yarik
         val quitIntent = Intent(this, MeshForegroundService::class.java).apply { action = ACTION_QUIT }
         val quitPendingIntent = PendingIntent.getService(
             this, 1, quitIntent,

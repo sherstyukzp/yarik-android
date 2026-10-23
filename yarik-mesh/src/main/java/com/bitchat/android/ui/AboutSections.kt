@@ -1,9 +1,9 @@
 package com.bitchat.android.ui
 
 import androidx.annotation.DrawableRes
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateDpAsState
-import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -20,6 +20,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Chat
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -41,9 +43,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.bitchat.android.ui.theme.BitchatFontFamily
 import com.bitchat.android.R
-import com.bitchat.android.core.ui.icon.BitChatIcon
+import com.bitchat.android.ui.theme.BitchatFontFamily
 import com.bitchat.android.ui.theme.BitchatMotion
 import com.bitchat.android.ui.theme.LocalBitchatPalette
 
@@ -186,7 +187,7 @@ internal fun AboutHero(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Icon(
-            imageVector = BitChatIcon,
+            imageVector = Icons.Filled.Chat,
             contentDescription = null,
             tint = colorScheme.primary,
             modifier = Modifier.size(64.dp)

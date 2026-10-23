@@ -22,7 +22,8 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.bitchat.android.core.ui.icon.BitChatIcon
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Chat
 import com.bitchat.android.ui.rememberPressScale
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -81,7 +82,7 @@ fun BitChatBrandButton(
         contentAlignment = Alignment.Center
     ) {
         Icon(
-            imageVector = BitChatIcon,
+            imageVector = Icons.Filled.Chat,
             contentDescription = contentDescription,
             tint = tint,
             modifier = Modifier
