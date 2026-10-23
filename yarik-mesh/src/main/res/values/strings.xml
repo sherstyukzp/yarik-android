@@ -6,6 +6,29 @@
     <string name="cashu_redeem_wallet">Redeem in wallet</string>
     <string name="cashu_redeem_web">Redeem on web</string>
     <string name="app_name" tools:ignore="UnusedResources">YarikMesh</string>
+    <string name="settings_title">Settings</string>
+    <string name="search_chats">Search</string>
+    <string name="new_chat">New chat</string>
+    <string name="nearby_chat_title">Nearby</string>
+    <string name="nearby_chat_subtitle">People around you over Bluetooth</string>
+    <string name="location_chat_subtitle">People in this area</string>
+    <string name="channel_chat_subtitle">Channel</string>
+    <string name="people_nearby_count">%1$d nearby</string>
+    <string name="no_chats_yet">No chats yet</string>
+    <string name="status_online">Online</string>
+    <string name="status_offline">Last seen recently</string>
+    <string name="settings_section_profile">Profile</string>
+    <string name="settings_section_network">Network</string>
+    <string name="settings_section_privacy">Privacy</string>
+    <string name="save_nickname">Save nickname</string>
+    <string name="change_language">Change</string>
+    <string name="live_voice_title">Live push-to-talk</string>
+    <string name="live_voice_subtitle">Play voice bursts live; voice notes are sent when you release</string>
+    <string name="wifi_aware_title">Wi-Fi Aware</string>
+    <string name="wifi_aware_subtitle">Faster local mesh on supported devices</string>
+    <string name="emergency_wipe">Emergency wipe</string>
+    <string name="emergency_wipe_subtitle">Erase all chats, keys, and identity from this device</string>
+    <string name="emergency_wipe_confirm">This permanently deletes all messages, keys, and identity on this device.</string>
     <string name="mesh_hotspot_share_label">Share offline APK</string>
     <string name="permission_bluetooth_rationale">Bluetooth permission is required for peer-to-peer messaging without internet.</string>
     <string name="permission_location_rationale">Location permission is required to discover nearby devices via Bluetooth.</string>
@@ -295,7 +318,7 @@
   <string name="prepare_apk_error_untrusted_key">The APK from %1$s is not signed by a trusted Yarik release key.</string>
   <string name="prepare_apk_error_not_universal">%1$s returned an architecture-specific APK, not the required universal APK.</string>
   <string name="prepare_apk_error_apk_unreadable">The downloaded APK could not be read.</string>
-  <string name="prepare_apk_error_not_bitchat">The downloaded file is not a Yarik APK.</string>
+  <string name="prepare_apk_error_not_yarik">The downloaded file is not a Yarik APK.</string>
   <string name="prepare_apk_error_no_version">The downloaded APK has no version information.</string>
   <string name="prepare_apk_error_source_failed">%1$s download failed.</string>
   <string name="prepare_apk_error_all_sources">All configured APK sources failed.</string>
@@ -346,7 +369,7 @@
   <string name="cd_open_map">Open map</string>
   <string name="cd_remove_bookmark">Remove bookmark</string>
   <string name="cd_teleport">Teleport</string>
-  <string name="notification_action_quit_bitchat">Quit Yarik</string>
+  <string name="notification_action_quit_yarik">Quit Yarik</string>
   <string name="about_background_title">Run in Background</string>
   <string name="about_background_desc">Keep mesh active when app is closed (foreground service)</string>
   <string name="cd_leave_channel">Leave channel</string>
