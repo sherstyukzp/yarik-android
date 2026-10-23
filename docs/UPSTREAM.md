@@ -1,6 +1,6 @@
 # Upstream mesh stack (Android)
 
-Yarik Android vendors the full [permissionlesstech/bitchat-android](https://github.com/permissionlesstech/bitchat-android) tree at the repository root. Protocol wire format and Kotlin packages stay aligned with upstream for mesh interoperability.
+Network and protocol code lives in the **`:yarik-mesh`** Gradle module, vendored from [permissionlesstech/bitchat-android](https://github.com/permissionlesstech/bitchat-android). The `:app` module is Yarik’s product shell only.
 
 ## Pinned upstream commit
 
@@ -13,42 +13,43 @@ Yarik Android vendors the full [permissionlesstech/bitchat-android](https://gith
 
 ## Strategy
 
-**Root vendor copy with documented SHA + git remote for sync** (not a submodule).
+**Library module (`:yarik-mesh`) with documented SHA + git remote for sync** (not a submodule).
 
-- Remote name: `mesh-upstream-android` → upstream URL above (rename locally if you still have legacy `bitchat-android` remote).
-- Initial import: checked out upstream `main` at the pinned SHA onto `develop`, replacing the empty Compose starter on `main`.
-- Rationale: upstream is a multi-module Gradle app (`:app`, `:wear`); submodule paths would complicate CI.
+- Remote name: `mesh-upstream-android` → upstream URL above.
+- Import path: upstream tree at the pinned SHA; mesh sources under `yarik-mesh/`, not the Yarik app shell.
+- Sync by merging upstream into `yarik-mesh/` and updating this commit hash.
 
 ### Syncing newer upstream
 
 ```bash
 git fetch mesh-upstream-android main
-git merge mesh-upstream-android/main -m "chore: sync mesh-upstream-android"
+# merge or cherry-pick into yarik-mesh, resolve conflicts
 ```
 
 After merge, update the commit hash in this file.
 
-## Yarik vs upstream identifiers
+## Wire / protocol identifiers (unchanged for interop)
+
+These stay as upstream defines them; they are **not** shown in the Yarik app UI:
+
+| Kind | Example | Notes |
+|------|---------|--------|
+| Deep link scheme | `bitchat://verify` | Re-enable in `:app` manifest when verification UX ships |
+| Bluetooth / Wi‑Fi Aware service names | upstream constants in mesh code | Required for peer discovery |
+| Kotlin packages | `com.bitchat.android.*` | Internal to `:yarik-mesh`; prefer new API under `com.yarik.mesh.*` |
 
 | Setting | Yarik value | Notes |
 |---------|-------------|--------|
-| `applicationId` | `com.yarik.android` | Yarik install identity; protocol unchanged |
-| `namespace` | `com.bitchat.android` | Upstream package layout (kept for mesh code) |
-| Display name | Yarik (`app_name` strings) | User-facing branding |
+| `:app` `applicationId` | `com.yarik.android` | Install identity |
+| `:yarik-mesh` `namespace` | `com.bitchat.android` | Matches upstream layout |
 
-Deep links and Wi‑Fi Aware service identifiers that use the `bitchat` scheme/name are **protocol constants** and remain unchanged for peer compatibility.
+## Manual mesh smoke (after chat UI wired)
 
-## First mesh message (manual test)
+Two physical Android devices with BLE:
 
-Two physical Android devices (BLE cannot be emulated reliably):
+1. `./gradlew :app:installDebug` on both
+2. Grant Bluetooth / Nearby devices, Location, Notifications
+3. Confirm mesh peers on the chat screen (future UI)
+4. Send on `#bluetooth` and verify receive
 
-1. Install debug APK on both: `./gradlew :app:installDebug`
-2. Grant **Nearby devices / Bluetooth** and **Location** (required for BLE scan on Android).
-3. Disable battery optimization for the app if mesh drops in background (Settings → App → Battery).
-4. Open app on both; ensure mesh indicator shows peers (same room, within ~10 m, Bluetooth on).
-5. Stay on default **`#bluetooth`** public mesh channel (IRC-style input at bottom).
-6. On device A, type a message and send. Confirm it appears on device B (and vice versa).
-
-**Mesh Lab:** Upstream documents mesh testing under `.agents/skills/mesh-lab/` for controlled multi-device scenarios.
-
-Single-device smoke: `./gradlew :app:assembleDebug` and launch — UI loads; mesh send/receive requires a second peer.
+Shell-only build today: `./gradlew :app:assembleDebug` and launch — starter home + background mesh init.

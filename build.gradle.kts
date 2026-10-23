@@ -49,5 +49,5 @@ tasks.whenTaskAdded {
 tasks.register("clientRewriteContractTest") {
     group = "verification"
     description = "Runs the complete compatibility gate for a from-scratch client rewrite."
-    dependsOn(":app:testDebugUnitTest")
+    dependsOn(":yarik-mesh:testDebugUnitTest")
 }

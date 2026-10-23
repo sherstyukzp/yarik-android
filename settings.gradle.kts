@@ -15,5 +15,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "yarik-android"
 include(":app")
-include(":wear")
-// Using published Arti AAR; local module not included
+include(":yarik-mesh")
+// Upstream Wear OS companion remains in repo; not wired until shell + mesh API stabilizes.
