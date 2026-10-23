@@ -19,9 +19,23 @@ subprojects {
     }
 
     pluginManager.withPlugin("com.android.application") {
+        val androidStudioEmptyLockConfigurations = listOf(
+            "androidTestUtil",
+            "androidJdkImage",
+            "coreLibraryDesugaring",
+            "debugAndroidTestAnnotationProcessorClasspath",
+            "debugAndroidTestImplementationDependenciesMetadata",
+            "debugImplementationDependenciesMetadata",
+            "debugUnitTestImplementationDependenciesMetadata",
+            "lintPublish",
+            "releaseAnnotationProcessorClasspath",
+            "releaseImplementationDependenciesMetadata",
+            "releaseReverseMetadataValues",
+        )
         val resolveIdeRuntimeClasspathCopyLock = tasks.register("resolveIdeRuntimeClasspathCopyLock") {
             group = "build setup"
-            description = "Resolves this module's Android Studio runtime classpath copies."
+            description =
+                "Resolves Android Studio classpath copies and empty AGP configurations for lock refresh."
             notCompatibleWithConfigurationCache("Resolves copied configurations at execution time")
             doFirst {
                 check(gradle.startParameter.isWriteDependencyLocks) {
@@ -31,6 +45,9 @@ subprojects {
             doLast {
                 listOf("debugRuntimeClasspath", "releaseRuntimeClasspath").forEach { configurationName ->
                     configurations.getByName(configurationName).copy().resolve()
+                }
+                androidStudioEmptyLockConfigurations.forEach { configurationName ->
+                    configurations.getByName(configurationName).resolve()
                 }
             }
         }
